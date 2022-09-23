@@ -130,4 +130,110 @@ class TransactionCloudTest extends TestCase
 
         $this->assertEquals($url, $actual);
     }
+
+    public function testGetAdminUrl404()
+    {
+        $this->expectException(InvalidResponseException::class);
+
+        $client = $this->createMock(ClientInterface::class);
+        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $request = $this->createMock(RequestInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+
+        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/generate-url-to-admin", TransactionCloud::PROD_API_HOST))->willReturn($request);
+        $client->method('sendRequest')->with($request)->willReturn($response);
+
+        $response->method('getStatusCode')->willReturn(403);
+
+        $subject = new TransactionCloud($client, $requestFactory);
+        $subject->getUrlToAdmin();
+    }
+
+    public function testGetAdminUrlInvalidContentNull()
+    {
+        $this->expectException(MalformedResponseException::class);
+
+        $client = $this->createMock(ClientInterface::class);
+        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $request = $this->createMock(RequestInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+        $stream = $this->createMock(StreamInterface::class);
+
+        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/generate-url-to-admin", TransactionCloud::PROD_API_HOST))->willReturn($request);
+        $client->method('sendRequest')->with($request)->willReturn($response);
+
+        $response->method('getStatusCode')->willReturn(200);
+        $response->method('getBody')->willReturn($stream);
+
+        $subject = new TransactionCloud($client, $requestFactory);
+        $subject->getUrlToAdmin();
+    }
+
+    public function testGetAdminUrlInvalidContentNoUrl()
+    {
+        $this->expectException(MalformedResponseException::class);
+
+        $client = $this->createMock(ClientInterface::class);
+        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $request = $this->createMock(RequestInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+        $stream = $this->createMock(StreamInterface::class);
+
+        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/generate-url-to-admin", TransactionCloud::PROD_API_HOST))->willReturn($request);
+        $client->method('sendRequest')->with($request)->willReturn($response);
+
+        $response->method('getStatusCode')->willReturn(200);
+        $response->method('getBody')->willReturn($stream);
+
+        $stream->method('getContents')->willReturn(json_encode([]));
+
+        $subject = new TransactionCloud($client, $requestFactory);
+        $subject->getUrlToAdmin();
+    }
+
+    public function testGetAdminUrlInvalidContentUrlIsNotString()
+    {
+        $this->expectException(MalformedResponseException::class);
+
+        $client = $this->createMock(ClientInterface::class);
+        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $request = $this->createMock(RequestInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+        $stream = $this->createMock(StreamInterface::class);
+
+        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/generate-url-to-admin", TransactionCloud::PROD_API_HOST))->willReturn($request);
+        $client->method('sendRequest')->with($request)->willReturn($response);
+
+        $response->method('getStatusCode')->willReturn(200);
+        $response->method('getBody')->willReturn($stream);
+
+        $stream->method('getContents')->willReturn(json_encode(['url' => 1]));
+
+        $subject = new TransactionCloud($client, $requestFactory);
+        $subject->getUrlToAdmin();
+    }
+
+    public function testGetAdminUrlReturnsUrl()
+    {
+        $client = $this->createMock(ClientInterface::class);
+        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $request = $this->createMock(RequestInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+        $stream = $this->createMock(StreamInterface::class);
+        $email = "iain.cambridge@example.com";
+        $url = "http://manage.example.org/admin-url";
+
+        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/generate-url-to-admin", TransactionCloud::PROD_API_HOST))->willReturn($request);
+        $client->method('sendRequest')->with($request)->willReturn($response);
+
+        $response->method('getStatusCode')->willReturn(200);
+        $response->method('getBody')->willReturn($stream);
+
+        $stream->method('getContents')->willReturn(json_encode(['url' => $url]));
+
+        $subject = new TransactionCloud($client, $requestFactory);
+        $actual = $subject->getUrlToAdmin();
+
+        $this->assertEquals($url, $actual);
+    }
 }

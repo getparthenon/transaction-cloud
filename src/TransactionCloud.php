@@ -55,4 +55,22 @@ final class TransactionCloud implements ClientInterface
 
         return $jsonData['url'];
     }
+
+    public function getUrlToAdmin() : string {
+        $request = $this->requestFactory->createRequest("GET", sprintf("%s/v1/generate-url-to-admin", $this->baseUrl));
+
+        $response = $this->client->sendRequest($request);
+
+        if ($response->getStatusCode() !== 200) {
+            throw new InvalidResponseException($response);
+        }
+
+        $jsonData = json_decode($response->getBody()->getContents(), true);
+
+        if (!$jsonData || !isset($jsonData['url']) || !is_string($jsonData['url'])) {
+            throw new MalformedResponseException($response, "Expected return body to contain a url key with a string value");
+        }
+
+        return $jsonData['url'];
+    }
 }
