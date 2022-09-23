@@ -2,7 +2,7 @@
 
 namespace TransactionCloud;
 
-use Http\Client\Common\Plugin\HeaderDefaultsPlugin;
+use Http\Client\Common\Plugin\HeaderSetPlugin;
 use Http\Client\Common\PluginClient;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
@@ -29,7 +29,7 @@ final class TransactionCloud implements ClientInterface
 
     public static function create(string $apiKey, string $apiKeyPassword, bool $sandbox = false): self {
 
-        $defaultHeaders = new HeaderDefaultsPlugin([
+        $defaultHeaders = new HeaderSetPlugin([
             'User-Agent' => 'parthenon/transaction-cloud '.self::VERSION,
             'Authorization' => sprintf("%s:%s", $apiKey, $apiKeyPassword),
         ]);
