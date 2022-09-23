@@ -1,0 +1,18 @@
+{
+    "name": "parthenon/transaction-cloud",
+    "description": "A PHP Library to provide integration with transaction.cloud",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "TransactionCloud\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Iain Cambridge",
+            "email": "iain@humblyarrogant.io"
+        }
+    ],
+    "require": {}
+}
