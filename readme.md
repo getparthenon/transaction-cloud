@@ -10,3 +10,8 @@ This is a library to provide integration to the [Transaction.cloud](https://host
 ```sh
 composer require parthenon/transaction-cloud
 ```
+
+```php
+$transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "api_key_password");
+```
+
