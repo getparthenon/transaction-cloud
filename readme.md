@@ -15,3 +15,9 @@ composer require parthenon/transaction-cloud
 $transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "api_key_password");
 ```
 
+### Get Url To Manage Transactions
+
+```php 
+$transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "api_key_password");
+$url = $transactionCloud->getUrlToManageTransactions("iain.cambridge@example.org");
+```
