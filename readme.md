@@ -21,3 +21,10 @@ $transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "a
 $transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "api_key_password");
 $url = $transactionCloud->getUrlToManageTransactions("iain.cambridge@example.org");
 ```
+
+### Get URL to Admin Dashboard
+
+```php 
+$transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "api_key_password");
+$url = $transactionCloud->getUrlToAdmin();
+```
