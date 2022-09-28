@@ -97,8 +97,8 @@ final class TransactionCloud implements ClientInterface
 
         $jsonData = json_decode($response->getBody()->getContents(), true);
 
-        if (!$jsonData ) {
-            throw new MalformedResponseException($response, "Expected return body to contain a url key with a string value valid ");
+        if ($jsonData === null) {
+            throw new MalformedResponseException($response, "Expected return body to contain valid json");
         }
 
         $output = [];
