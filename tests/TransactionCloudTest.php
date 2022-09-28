@@ -567,4 +567,48 @@ class TransactionCloudTest extends TestCase
 
         $this->assertFalse($subject->assignTransactionToEmail($id, $email));
     }
+
+    public function testCancelSuccess()
+    {
+        $client = $this->createMock(ClientInterface::class);
+        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $request = $this->createMock(RequestInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+        $stream = $this->createMock(StreamInterface::class);
+        $modelFactory = $this->createMock(ModelFactory::class);
+        $streamFactory = $this->createMock(StreamFactoryInterface::class);
+        $email = "iain.cambridge@example.org";
+        $id = "TC-TR_023003";
+
+        $requestFactory->method('createRequest')->with("POST", sprintf("%s/v1/cancel-subscription/%s", TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
+        $client->method('sendRequest')->with($request)->willReturn($response);
+
+        $response->method('getStatusCode')->willReturn(200);
+
+        $subject = new TransactionCloud($client, $requestFactory, $streamFactory, $modelFactory);
+
+        $this->assertTrue($subject->cancelSubscription($id));
+    }
+
+    public function testCancelSubscriptionVoid()
+    {
+        $client = $this->createMock(ClientInterface::class);
+        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $request = $this->createMock(RequestInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+        $stream = $this->createMock(StreamInterface::class);
+        $modelFactory = $this->createMock(ModelFactory::class);
+        $streamFactory = $this->createMock(StreamFactoryInterface::class);
+        $id = "TC-TR_023003";
+
+        $requestFactory->method('createRequest')->with("POST", sprintf("%s/v1/cancel-subscription/%s", TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
+        $client->method('sendRequest')->with($request)->willReturn($response);
+
+        $response->method('getStatusCode')->willReturn(301);
+
+
+        $subject = new TransactionCloud($client, $requestFactory, $streamFactory, $modelFactory);
+
+        $this->assertFalse($subject->cancelSubscription($id));
+    }
 }

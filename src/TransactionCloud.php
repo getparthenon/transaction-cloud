@@ -158,4 +158,15 @@ final class TransactionCloud implements ClientInterface
         }
         return true;
     }
+
+    public function cancelSubscription(string $id): bool
+    {
+        $request = $this->requestFactory->createRequest("POST", sprintf("%s/v1/cancel-subscription/%s", $this->baseUrl, $id));
+        $response = $this->client->sendRequest($request);
+
+        if ($response->getStatusCode() !== 200) {
+            return false;
+        }
+        return true;
+    }
 }
