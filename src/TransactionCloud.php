@@ -10,6 +10,7 @@ use Psr\Http\Client\ClientInterface as PsrClientInterface;
 use Psr\Http\Message\RequestFactoryInterface as PsrRequestFactoryInterface;
 use TransactionCloud\Exception\InvalidResponseException;
 use TransactionCloud\Exception\MalformedResponseException;
+use TransactionCloud\Exception\MissingModelDataException;
 use TransactionCloud\Model\ModelFactory;
 use TransactionCloud\Model\Transaction;
 
@@ -102,9 +103,12 @@ final class TransactionCloud implements ClientInterface
         }
 
         $output = [];
-
-        foreach ($jsonData as $row) {
-            $output[] = $this->modelFactory->buildTransaction($row);
+        try {
+            foreach ($jsonData as $row) {
+                $output[] = $this->modelFactory->buildTransaction($row);
+            }
+        } catch (MissingModelDataException $e) {
+            throw new MalformedResponseException($response, $e->getMessage(), $e->getCode(), $e);
         }
 
         return $output;

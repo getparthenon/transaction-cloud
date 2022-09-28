@@ -10,6 +10,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use TransactionCloud\Exception\InvalidResponseException;
 use TransactionCloud\Exception\MalformedResponseException;
+use TransactionCloud\Exception\MissingModelDataException;
+use TransactionCloud\Model\ModelFactory;
 use TransactionCloud\TransactionCloud;
 
 class TransactionCloudTest extends TestCase
@@ -357,6 +359,55 @@ class TransactionCloudTest extends TestCase
         $stream->method('getContents')->willReturn([]);
 
         $subject = new TransactionCloud($client, $requestFactory);
+        $actual = $subject->getTransactionsByEmail($email);
+
+        $this->assertCount(1, $actual);
+    }
+
+    public function testGetTransactionsByEmailExceptionFlungOnFactoryException()
+    {
+        $this->expectException(InvalidResponseException::class);
+
+        $client = $this->createMock(ClientInterface::class);
+        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $request = $this->createMock(RequestInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+        $stream = $this->createMock(StreamInterface::class);
+        $modelFactory = $this->createMock(ModelFactory::class);
+        $email = "iain.cambridge@example.com";
+
+        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/transactions/%s", TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
+        $client->method('sendRequest')->with($request)->willReturn($response);
+
+        $response->method('getStatusCode')->willReturn(200);
+        $response->method('getBody')->willReturn($stream);
+
+        $returnData = [
+            [
+                "assignedEmail" => "",
+                "chargeFrequency"=> "UNKNOWN",
+                "country"=> "US",
+                "createDate" => "2021-09-20",
+                "email" => "customer@domain.com",
+                "id" => "TC-TR_xxyyxxx",
+                "lastCharge" => "2021-09-20",
+                "payload" => "",
+                "productId" => "TC-PR_qqqzzzyy",
+                "productName" =>  "Product name",
+                "transactionStatus" => "ONE_TIME_PAYMENT_STATUS_PAID",
+                "transactionType" => "ONETIME",
+                "netPrice" => "20.0",
+                "tax" => "2.4",
+                "currency" => "USD",
+                "netPriceInUSD" => 20.0
+            ]
+        ];
+
+        $stream->method('getContents')->willReturn(json_encode($returnData));
+
+        $modelFactory->method('buildTransaction')->willThrowException(new MissingModelDataException());
+
+        $subject = new TransactionCloud($client, $requestFactory, $modelFactory);
         $actual = $subject->getTransactionsByEmail($email);
 
         $this->assertCount(1, $actual);
