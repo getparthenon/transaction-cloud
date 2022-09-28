@@ -113,4 +113,33 @@ final class TransactionCloud implements ClientInterface
 
         return $output;
     }
+
+    /**
+     * @param string $id
+     * @return Transaction
+     * @throws InvalidResponseException
+     * @throws MalformedResponseException
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    public function getTransactionById(string $id): Transaction
+    {
+        $request = $this->requestFactory->createRequest("GET", sprintf("%s/v1/transaction/%s", $this->baseUrl, $id));
+        $response = $this->client->sendRequest($request);
+
+        if ($response->getStatusCode() !== 200) {
+            throw new InvalidResponseException($response);
+        }
+
+        $jsonData = json_decode($response->getBody()->getContents(), true);
+
+        if ($jsonData === null) {
+            throw new MalformedResponseException($response, "Expected return body to contain valid json");
+        }
+
+        try {
+            return $this->modelFactory->buildTransaction($jsonData);
+        } catch (MissingModelDataException $e) {
+            throw new MalformedResponseException($response, $e->getMessage(), $e->getCode(), $e);
+        }
+    }
 }
