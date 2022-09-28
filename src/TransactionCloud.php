@@ -10,6 +10,8 @@ use Psr\Http\Client\ClientInterface as PsrClientInterface;
 use Psr\Http\Message\RequestFactoryInterface as PsrRequestFactoryInterface;
 use TransactionCloud\Exception\InvalidResponseException;
 use TransactionCloud\Exception\MalformedResponseException;
+use TransactionCloud\Model\Factory;
+use TransactionCloud\Model\Transaction;
 
 final class TransactionCloud implements ClientInterface
 {
@@ -19,12 +21,14 @@ final class TransactionCloud implements ClientInterface
 
     private PsrClientInterface $client;
     private PsrRequestFactoryInterface $requestFactory;
+    private Factory $modelFactory;
     private string $baseUrl;
 
-    public function __construct(?PsrClientInterface $client = null, ?PsrRequestFactoryInterface $requestFactory = null, ?string $baseUrl = null) {
+    public function __construct(?PsrClientInterface $client = null, ?PsrRequestFactoryInterface $requestFactory = null, ?Factory $factory = null, ?string $baseUrl = null) {
         $this->client = $client ?? Psr18ClientDiscovery::find();
         $this->requestFactory = $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory();
         $this->baseUrl = $baseUrl ?? self::PROD_API_HOST;
+        $this->modelFactory = $factory ?? new Factory();
     }
 
     public static function create(string $apiKey, string $apiKeyPassword, bool $sandbox = false): self {
@@ -35,7 +39,7 @@ final class TransactionCloud implements ClientInterface
         ]);
         $pluginClient = new PluginClient(Psr18ClientDiscovery::find(), [$defaultHeaders]);
 
-        return new self($pluginClient, Psr17FactoryDiscovery::findRequestFactory(), $sandbox ? self::SANDBOX_API_HOST : self::PROD_API_HOST);
+        return new self($pluginClient, Psr17FactoryDiscovery::findRequestFactory(), null,$sandbox ? self::SANDBOX_API_HOST : self::PROD_API_HOST);
     }
 
     public function getUrlToManageTransactions(string $email) : string {
@@ -72,5 +76,37 @@ final class TransactionCloud implements ClientInterface
         }
 
         return $jsonData['url'];
+    }
+
+    /**
+     * @param string $email
+     * @return Transaction[]
+     * @throws InvalidResponseException
+     * @throws MalformedResponseException
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    public function getTransactionsByEmail(string $email): array
+    {
+        $request = $this->requestFactory->createRequest("GET", sprintf("%s/v1/transactions/%s", $this->baseUrl, $email));
+
+        $response = $this->client->sendRequest($request);
+
+        if ($response->getStatusCode() !== 200) {
+            throw new InvalidResponseException($response);
+        }
+
+        $jsonData = json_decode($response->getBody()->getContents(), true);
+
+        if (!$jsonData ) {
+            throw new MalformedResponseException($response, "Expected return body to contain a url key with a string value valid ");
+        }
+
+        $output = [];
+
+        foreach ($jsonData as $row) {
+            $output[] = $this->modelFactory->buildTransaction($row);
+        }
+
+        return $output;
     }
 }
