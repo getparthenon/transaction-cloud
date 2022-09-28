@@ -35,7 +35,7 @@ class Transaction
         string $transactionType,
         string $netPrice,
         string $tax,
-        string $currency,
+        string $currency
     ) {
         $this->assignedEmail = $assignedEmail;
         $this->chargeFrequency = $chargeFrequency;
