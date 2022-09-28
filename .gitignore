@@ -36,3 +36,4 @@ yarn-error.log
 composer.lock
 yarn.lock
 symfony.lock
+.phpunit.result.cache 
