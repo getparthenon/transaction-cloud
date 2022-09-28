@@ -6,8 +6,10 @@ use Http\Client\Common\Plugin\HeaderDefaultsPlugin;
 use Http\Client\Common\PluginClient;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
+use Http\Message\StreamFactory;
 use Psr\Http\Client\ClientInterface as PsrClientInterface;
 use Psr\Http\Message\RequestFactoryInterface as PsrRequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 use TransactionCloud\Exception\InvalidResponseException;
 use TransactionCloud\Exception\MalformedResponseException;
 use TransactionCloud\Exception\MissingModelDataException;
@@ -23,11 +25,13 @@ final class TransactionCloud implements ClientInterface
     private PsrClientInterface $client;
     private PsrRequestFactoryInterface $requestFactory;
     private ModelFactory $modelFactory;
+    private StreamFactoryInterface $streamFactory;
     private string $baseUrl;
 
-    public function __construct(?PsrClientInterface $client = null, ?PsrRequestFactoryInterface $requestFactory = null, ?ModelFactory $factory = null, ?string $baseUrl = null) {
+    public function __construct(?PsrClientInterface $client = null, ?PsrRequestFactoryInterface $requestFactory = null, ?StreamFactoryInterface $streamFactory, ?ModelFactory $factory = null, ?string $baseUrl = null) {
         $this->client = $client ?? Psr18ClientDiscovery::find();
         $this->requestFactory = $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory();
+        $this->streamFactory = $streamFactory ?? Psr17FactoryDiscovery::findStreamFactory();
         $this->baseUrl = $baseUrl ?? self::PROD_API_HOST;
         $this->modelFactory = $factory ?? new ModelFactory();
     }
@@ -40,7 +44,7 @@ final class TransactionCloud implements ClientInterface
         ]);
         $pluginClient = new PluginClient(Psr18ClientDiscovery::find(), [$defaultHeaders]);
 
-        return new self($pluginClient, Psr17FactoryDiscovery::findRequestFactory(), null,$sandbox ? self::SANDBOX_API_HOST : self::PROD_API_HOST);
+        return new self($pluginClient, Psr17FactoryDiscovery::findRequestFactory(), Psr17FactoryDiscovery::findStreamFactory(), new ModelFactory(),$sandbox ? self::SANDBOX_API_HOST : self::PROD_API_HOST);
     }
 
     public function getUrlToManageTransactions(string $email) : string {
@@ -141,5 +145,17 @@ final class TransactionCloud implements ClientInterface
         } catch (MissingModelDataException $e) {
             throw new MalformedResponseException($response, $e->getMessage(), $e->getCode(), $e);
         }
+    }
+
+    public function assignTransactionToEmail(string $id, string $email): bool
+    {
+        $request = $this->requestFactory->createRequest("POST", sprintf("%s/v1/transaction/%s", $this->baseUrl, $id));
+        $request->withBody($this->streamFactory->createStream(json_encode(['assignEmail' => $email])));
+        $response = $this->client->sendRequest($request);
+
+        if ($response->getStatusCode() !== 200) {
+            return false;
+        }
+        return true;
     }
 }
