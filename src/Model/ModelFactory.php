@@ -2,6 +2,9 @@
 
 namespace TransactionCloud\Model;
 
+use Brick\Money\Currency;
+use Brick\Money\Money;
+use Brick\Money\MoneyBag;
 use TransactionCloud\Exception\MalformedResponseException;
 use TransactionCloud\Exception\MissingModelDataException;
 
@@ -67,6 +70,10 @@ class ModelFactory
         if (!isset($transaction['currency'])) {
             throw new MissingModelDataException("Expected key 'currency' to contain a string");
         }
+        $currency = Currency::of($transaction['currency']);
+
+        $netPrice = Money::of($transaction['netPrice'], $currency);
+        $tax = Money::of($transaction['tax'], $currency);
 
         return new Transaction(
             $transaction['assignedEmail'],
@@ -81,9 +88,9 @@ class ModelFactory
             $transaction['productName'],
             $transaction['transactionStatus'],
             $transaction['transactionType'],
-            $transaction['netPrice'],
-            $transaction['tax'],
-            $transaction['currency'],
+            $netPrice,
+            $tax,
+            $currency,
         );
     }
 

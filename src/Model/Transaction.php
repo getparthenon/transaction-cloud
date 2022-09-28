@@ -2,6 +2,9 @@
 
 namespace TransactionCloud\Model;
 
+use Brick\Money\Currency;
+use Brick\Money\Money;
+
 class Transaction
 {
     private string $assignedEmail;
@@ -16,9 +19,9 @@ class Transaction
     private string $productName;
     private string $transactionStatus;
     private string $transactionType;
-    private string $netPrice;
-    private string $tax;
-    private string $currency;
+    private Money $netPrice;
+    private Money $tax;
+    private Currency $currency;
 
     public function __construct(
         string $assignedEmail,
@@ -33,9 +36,9 @@ class Transaction
         string $productName,
         string $transactionStatus,
         string $transactionType,
-        string $netPrice,
-        string $tax,
-        string $currency
+        Money $netPrice,
+        Money $tax,
+        Currency $currency
     ) {
         $this->assignedEmail = $assignedEmail;
         $this->chargeFrequency = $chargeFrequency;
@@ -114,17 +117,17 @@ class Transaction
         return $this->transactionType;
     }
 
-    public function getNetPrice(): string
+    public function getNetPrice(): Money
     {
         return $this->netPrice;
     }
 
-    public function getTax(): string
+    public function getTax(): Money
     {
         return $this->tax;
     }
 
-    public function getCurrency(): string
+    public function getCurrency(): Currency
     {
         return $this->currency;
     }
