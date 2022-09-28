@@ -24,6 +24,7 @@
         "psr/http-message": "^1.0",
         "php-http/discovery": "^1.14",
         "psr/http-client": "^1.0",
-        "php-http/client-common": "^2.5"
+        "php-http/client-common": "^2.5",
+        "brick/money": "^0.6.0"
     }
 }
