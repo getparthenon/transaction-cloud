@@ -11,7 +11,7 @@ class Transaction
     private string $email;
     private string $id;
     private \DateTimeInterface $lastCharge;
-    private string $payload;
+    private ?string $payload;
     private string $productId;
     private string $productName;
     private string $transactionStatus;
@@ -28,7 +28,7 @@ class Transaction
         string $email,
         string $id,
         \DateTimeInterface $lastCharge,
-        string $payload,
+        ?string $payload,
         string $productId,
         string $productName,
         string $transactionStatus,
@@ -89,7 +89,7 @@ class Transaction
         return $this->lastCharge;
     }
 
-    public function getPayload(): string
+    public function getPayload(): ?string
     {
         return $this->payload;
     }

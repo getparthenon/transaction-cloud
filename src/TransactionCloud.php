@@ -10,7 +10,7 @@ use Psr\Http\Client\ClientInterface as PsrClientInterface;
 use Psr\Http\Message\RequestFactoryInterface as PsrRequestFactoryInterface;
 use TransactionCloud\Exception\InvalidResponseException;
 use TransactionCloud\Exception\MalformedResponseException;
-use TransactionCloud\Model\Factory;
+use TransactionCloud\Model\ModelFactory;
 use TransactionCloud\Model\Transaction;
 
 final class TransactionCloud implements ClientInterface
@@ -21,14 +21,14 @@ final class TransactionCloud implements ClientInterface
 
     private PsrClientInterface $client;
     private PsrRequestFactoryInterface $requestFactory;
-    private Factory $modelFactory;
+    private ModelFactory $modelFactory;
     private string $baseUrl;
 
-    public function __construct(?PsrClientInterface $client = null, ?PsrRequestFactoryInterface $requestFactory = null, ?Factory $factory = null, ?string $baseUrl = null) {
+    public function __construct(?PsrClientInterface $client = null, ?PsrRequestFactoryInterface $requestFactory = null, ?ModelFactory $factory = null, ?string $baseUrl = null) {
         $this->client = $client ?? Psr18ClientDiscovery::find();
         $this->requestFactory = $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory();
         $this->baseUrl = $baseUrl ?? self::PROD_API_HOST;
-        $this->modelFactory = $factory ?? new Factory();
+        $this->modelFactory = $factory ?? new ModelFactory();
     }
 
     public static function create(string $apiKey, string $apiKeyPassword, bool $sandbox = false): self {
