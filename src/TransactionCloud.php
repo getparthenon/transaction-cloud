@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 /*
  * This file is part of the Transaction.Cloud PHP SDK.
- *     Copyright Humbly Arrogant Ltd 2022
+ * Copyright Humbly Arrogant Ltd 2022
  *
- *     This source file is subject to the MIT license that is bundled
- *     with this source code in the file LICENSE.
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace TransactionCloud;
@@ -28,7 +28,7 @@ use TransactionCloud\Model\ProductData;
 use TransactionCloud\Model\Refund;
 use TransactionCloud\Model\Transaction;
 
-final class TransactionCloud implements ClientInterface
+final class TransactionCloud
 {
     public const VERSION = 0.1;
     public const PROD_API_HOST = 'https://api.transction.cloud';
@@ -70,7 +70,7 @@ final class TransactionCloud implements ClientInterface
             throw new InvalidResponseException($response);
         }
 
-        $jsonData = json_decode($response->getBody()->getContents(), true);
+        $jsonData = json_decode($response->getBody()->getContents() ?? '', true);
 
         if (!$jsonData || !isset($jsonData['url']) || !is_string($jsonData['url'])) {
             throw new MalformedResponseException($response, 'Expected return body to contain a url key with a string value');
@@ -89,7 +89,7 @@ final class TransactionCloud implements ClientInterface
             throw new InvalidResponseException($response);
         }
 
-        $jsonData = json_decode($response->getBody()->getContents(), true);
+        $jsonData = json_decode($response->getBody()->getContents() ?? '', true);
 
         if (!$jsonData || !isset($jsonData['url']) || !is_string($jsonData['url'])) {
             throw new MalformedResponseException($response, 'Expected return body to contain a url key with a string value');
@@ -115,7 +115,7 @@ final class TransactionCloud implements ClientInterface
             throw new InvalidResponseException($response);
         }
 
-        $jsonData = json_decode($response->getBody()->getContents(), true);
+        $jsonData = json_decode($response->getBody()->getContents() ?? '', true);
 
         if (null === $jsonData) {
             throw new MalformedResponseException($response, 'Expected return body to contain valid json');
