@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ *
+ *     This file is part of the Transaction.Cloud PHP SDK.
+ *     Copyright Humbly Arrogant Ltd 2022
+ *
+ *     This source file is subject to the MIT license that is bundled
+ *     with this source code in the file LICENSE.
+ */
+
 namespace Tests\TransactionCloud;
 
 use PHPUnit\Framework\TestCase;
@@ -24,7 +35,7 @@ class TransactionCloudTest extends TestCase
 {
     public function testCreateReturnsSelfInstance()
     {
-        $actual = TransactionCloud::create("username", "password");
+        $actual = TransactionCloud::create('username', 'password');
 
         $this->assertInstanceOf(TransactionCloud::class, $actual);
     }
@@ -38,9 +49,9 @@ class TransactionCloudTest extends TestCase
         $request = $this->createMock(RequestInterface::class);
         $response = $this->createMock(ResponseInterface::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $email = "iain.cambridge@example.com";
+        $email = 'iain.cambridge@example.com';
 
-        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/generate-url-to-manage-transactions/%s", TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
+        $requestFactory->method('createRequest')->with('GET', sprintf('%s/v1/generate-url-to-manage-transactions/%s', TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(403);
@@ -59,9 +70,9 @@ class TransactionCloudTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $stream = $this->createMock(StreamInterface::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $email = "iain.cambridge@example.com";
+        $email = 'iain.cambridge@example.com';
 
-        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/generate-url-to-manage-transactions/%s", TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
+        $requestFactory->method('createRequest')->with('GET', sprintf('%s/v1/generate-url-to-manage-transactions/%s', TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
@@ -81,9 +92,9 @@ class TransactionCloudTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $stream = $this->createMock(StreamInterface::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $email = "iain.cambridge@example.com";
+        $email = 'iain.cambridge@example.com';
 
-        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/generate-url-to-manage-transactions/%s", TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
+        $requestFactory->method('createRequest')->with('GET', sprintf('%s/v1/generate-url-to-manage-transactions/%s', TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
@@ -105,9 +116,9 @@ class TransactionCloudTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $stream = $this->createMock(StreamInterface::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $email = "iain.cambridge@example.com";
+        $email = 'iain.cambridge@example.com';
 
-        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/generate-url-to-manage-transactions/%s", TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
+        $requestFactory->method('createRequest')->with('GET', sprintf('%s/v1/generate-url-to-manage-transactions/%s', TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
@@ -127,10 +138,10 @@ class TransactionCloudTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $stream = $this->createMock(StreamInterface::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $email = "iain.cambridge@example.com";
-        $url = "http://manage.example.org/url";
+        $email = 'iain.cambridge@example.com';
+        $url = 'http://manage.example.org/url';
 
-        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/generate-url-to-manage-transactions/%s", TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
+        $requestFactory->method('createRequest')->with('GET', sprintf('%s/v1/generate-url-to-manage-transactions/%s', TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
@@ -154,7 +165,7 @@ class TransactionCloudTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
 
-        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/generate-url-to-admin", TransactionCloud::PROD_API_HOST))->willReturn($request);
+        $requestFactory->method('createRequest')->with('GET', sprintf('%s/v1/generate-url-to-admin', TransactionCloud::PROD_API_HOST))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(403);
@@ -174,7 +185,7 @@ class TransactionCloudTest extends TestCase
         $stream = $this->createMock(StreamInterface::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
 
-        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/generate-url-to-admin", TransactionCloud::PROD_API_HOST))->willReturn($request);
+        $requestFactory->method('createRequest')->with('GET', sprintf('%s/v1/generate-url-to-admin', TransactionCloud::PROD_API_HOST))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
@@ -195,7 +206,7 @@ class TransactionCloudTest extends TestCase
         $stream = $this->createMock(StreamInterface::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
 
-        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/generate-url-to-admin", TransactionCloud::PROD_API_HOST))->willReturn($request);
+        $requestFactory->method('createRequest')->with('GET', sprintf('%s/v1/generate-url-to-admin', TransactionCloud::PROD_API_HOST))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
@@ -218,7 +229,7 @@ class TransactionCloudTest extends TestCase
         $stream = $this->createMock(StreamInterface::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
 
-        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/generate-url-to-admin", TransactionCloud::PROD_API_HOST))->willReturn($request);
+        $requestFactory->method('createRequest')->with('GET', sprintf('%s/v1/generate-url-to-admin', TransactionCloud::PROD_API_HOST))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
@@ -238,10 +249,10 @@ class TransactionCloudTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $stream = $this->createMock(StreamInterface::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $email = "iain.cambridge@example.com";
-        $url = "http://manage.example.org/admin-url";
+        $email = 'iain.cambridge@example.com';
+        $url = 'http://manage.example.org/admin-url';
 
-        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/generate-url-to-admin", TransactionCloud::PROD_API_HOST))->willReturn($request);
+        $requestFactory->method('createRequest')->with('GET', sprintf('%s/v1/generate-url-to-admin', TransactionCloud::PROD_API_HOST))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
@@ -263,34 +274,33 @@ class TransactionCloudTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $stream = $this->createMock(StreamInterface::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $email = "iain.cambridge@example.com";
+        $email = 'iain.cambridge@example.com';
 
-        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/transactions/%s", TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
+        $requestFactory->method('createRequest')->with('GET', sprintf('%s/v1/transactions/%s', TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
         $response->method('getBody')->willReturn($stream);
 
-
         $returnData = [
             [
-                "assignedEmail" => "",
-                "chargeFrequency"=> "UNKNOWN",
-                "country"=> "US",
-                "createDate" => "2021-09-20",
-                "email" => "customer@domain.com",
-                "id" => "TC-TR_xxyyxxx",
-                "lastCharge" => "2021-09-20",
-                "payload" => "",
-                "productId" => "TC-PR_qqqzzzyy",
-                "productName" =>  "Product name",
-                "transactionStatus" => "ONE_TIME_PAYMENT_STATUS_PAID",
-                "transactionType" => "ONETIME",
-                "netPrice" => "20.0",
-                "tax" => "2.4",
-                "currency" => "USD",
-                "netPriceInUSD" => 20.0
-            ]
+                'assignedEmail' => '',
+                'chargeFrequency' => 'UNKNOWN',
+                'country' => 'US',
+                'createDate' => '2021-09-20',
+                'email' => 'customer@domain.com',
+                'id' => 'TC-TR_xxyyxxx',
+                'lastCharge' => '2021-09-20',
+                'payload' => '',
+                'productId' => 'TC-PR_qqqzzzyy',
+                'productName' => 'Product name',
+                'transactionStatus' => 'ONE_TIME_PAYMENT_STATUS_PAID',
+                'transactionType' => 'ONETIME',
+                'netPrice' => '20.0',
+                'tax' => '2.4',
+                'currency' => 'USD',
+                'netPriceInUSD' => 20.0,
+            ],
         ];
 
         $stream->method('getContents')->willReturn(json_encode($returnData));
@@ -309,14 +319,13 @@ class TransactionCloudTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $stream = $this->createMock(StreamInterface::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $email = "iain.cambridge@example.com";
+        $email = 'iain.cambridge@example.com';
 
-        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/transactions/%s", TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
+        $requestFactory->method('createRequest')->with('GET', sprintf('%s/v1/transactions/%s', TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
         $response->method('getBody')->willReturn($stream);
-
 
         $returnData = [
         ];
@@ -329,7 +338,6 @@ class TransactionCloudTest extends TestCase
         $this->assertCount(0, $actual);
     }
 
-
     public function testGetTransactionsByEmailExceptionFlungOnInvalidResponse()
     {
         $this->expectException(MalformedResponseException::class);
@@ -340,14 +348,13 @@ class TransactionCloudTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $stream = $this->createMock(StreamInterface::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $email = "iain.cambridge@example.com";
+        $email = 'iain.cambridge@example.com';
 
-        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/transactions/%s", TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
+        $requestFactory->method('createRequest')->with('GET', sprintf('%s/v1/transactions/%s', TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
         $response->method('getBody')->willReturn($stream);
-
 
         $stream->method('getContents')->willReturn(null);
 
@@ -365,14 +372,13 @@ class TransactionCloudTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $stream = $this->createMock(StreamInterface::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $email = "iain.cambridge@example.com";
+        $email = 'iain.cambridge@example.com';
 
-        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/transactions/%s", TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
+        $requestFactory->method('createRequest')->with('GET', sprintf('%s/v1/transactions/%s', TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(301);
         $response->method('getBody')->willReturn($stream);
-
 
         $stream->method('getContents')->willReturn([]);
 
@@ -391,9 +397,9 @@ class TransactionCloudTest extends TestCase
         $stream = $this->createMock(StreamInterface::class);
         $modelFactory = $this->createMock(ModelFactory::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $email = "iain.cambridge@example.com";
+        $email = 'iain.cambridge@example.com';
 
-        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/transactions/%s", TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
+        $requestFactory->method('createRequest')->with('GET', sprintf('%s/v1/transactions/%s', TransactionCloud::PROD_API_HOST, $email))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
@@ -401,23 +407,23 @@ class TransactionCloudTest extends TestCase
 
         $returnData = [
             [
-                "assignedEmail" => "",
-                "chargeFrequency"=> "UNKNOWN",
-                "country"=> "US",
-                "createDate" => "2021-09-20",
-                "email" => "customer@domain.com",
-                "id" => "TC-TR_xxyyxxx",
-                "lastCharge" => "2021-09-20",
-                "payload" => "",
-                "productId" => "TC-PR_qqqzzzyy",
-                "productName" =>  "Product name",
-                "transactionStatus" => "ONE_TIME_PAYMENT_STATUS_PAID",
-                "transactionType" => "ONETIME",
-                "netPrice" => "20.0",
-                "tax" => "2.4",
-                "currency" => "USD",
-                "netPriceInUSD" => 20.0
-            ]
+                'assignedEmail' => '',
+                'chargeFrequency' => 'UNKNOWN',
+                'country' => 'US',
+                'createDate' => '2021-09-20',
+                'email' => 'customer@domain.com',
+                'id' => 'TC-TR_xxyyxxx',
+                'lastCharge' => '2021-09-20',
+                'payload' => '',
+                'productId' => 'TC-PR_qqqzzzyy',
+                'productName' => 'Product name',
+                'transactionStatus' => 'ONE_TIME_PAYMENT_STATUS_PAID',
+                'transactionType' => 'ONETIME',
+                'netPrice' => '20.0',
+                'tax' => '2.4',
+                'currency' => 'USD',
+                'netPriceInUSD' => 20.0,
+            ],
         ];
 
         $stream->method('getContents')->willReturn(json_encode($returnData));
@@ -439,32 +445,31 @@ class TransactionCloudTest extends TestCase
         $stream = $this->createMock(StreamInterface::class);
         $modelFactory = $this->createMock(ModelFactory::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $id = "TC-TR_040405";
+        $id = 'TC-TR_040405';
 
-        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/transaction/%s", TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
+        $requestFactory->method('createRequest')->with('GET', sprintf('%s/v1/transaction/%s', TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
         $response->method('getBody')->willReturn($stream);
 
-
-        $returnData =     [
-            "assignedEmail" => "",
-            "chargeFrequency"=> "UNKNOWN",
-            "country"=> "US",
-            "createDate" => "2021-09-20",
-            "email" => "customer@domain.com",
-            "id" => "TC-TR_xxyyxxx",
-            "lastCharge" => "2021-09-20",
-            "payload" => "",
-            "productId" => "TC-PR_qqqzzzyy",
-            "productName" =>  "Product name",
-            "transactionStatus" => "ONE_TIME_PAYMENT_STATUS_PAID",
-            "transactionType" => "ONETIME",
-            "netPrice" => "20.0",
-            "tax" => "2.4",
-            "currency" => "USD",
-            "netPriceInUSD" => 20.0
+        $returnData = [
+            'assignedEmail' => '',
+            'chargeFrequency' => 'UNKNOWN',
+            'country' => 'US',
+            'createDate' => '2021-09-20',
+            'email' => 'customer@domain.com',
+            'id' => 'TC-TR_xxyyxxx',
+            'lastCharge' => '2021-09-20',
+            'payload' => '',
+            'productId' => 'TC-PR_qqqzzzyy',
+            'productName' => 'Product name',
+            'transactionStatus' => 'ONE_TIME_PAYMENT_STATUS_PAID',
+            'transactionType' => 'ONETIME',
+            'netPrice' => '20.0',
+            'tax' => '2.4',
+            'currency' => 'USD',
+            'netPriceInUSD' => 20.0,
         ];
 
         $stream->method('getContents')->willReturn(json_encode($returnData));
@@ -486,32 +491,31 @@ class TransactionCloudTest extends TestCase
         $stream = $this->createMock(StreamInterface::class);
         $modelFactory = $this->createMock(ModelFactory::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $id = "TC-TR_040405";
+        $id = 'TC-TR_040405';
 
-        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/transaction/%s", TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
+        $requestFactory->method('createRequest')->with('GET', sprintf('%s/v1/transaction/%s', TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
         $response->method('getBody')->willReturn($stream);
 
-
-        $returnData =     [
-            "assignedEmail" => "",
-            "chargeFrequency"=> "UNKNOWN",
-            "country"=> "US",
-            "createDate" => "2021-09-20",
-            "email" => "customer@domain.com",
-            "id" => "TC-TR_xxyyxxx",
-            "lastCharge" => "2021-09-20",
-            "payload" => "",
-            "productId" => "TC-PR_qqqzzzyy",
-            "productName" =>  "Product name",
-            "transactionStatus" => "ONE_TIME_PAYMENT_STATUS_PAID",
-            "transactionType" => "ONETIME",
-            "netPrice" => "20.0",
-            "tax" => "2.4",
-            "currency" => "USD",
-            "netPriceInUSD" => 20.0
+        $returnData = [
+            'assignedEmail' => '',
+            'chargeFrequency' => 'UNKNOWN',
+            'country' => 'US',
+            'createDate' => '2021-09-20',
+            'email' => 'customer@domain.com',
+            'id' => 'TC-TR_xxyyxxx',
+            'lastCharge' => '2021-09-20',
+            'payload' => '',
+            'productId' => 'TC-PR_qqqzzzyy',
+            'productName' => 'Product name',
+            'transactionStatus' => 'ONE_TIME_PAYMENT_STATUS_PAID',
+            'transactionType' => 'ONETIME',
+            'netPrice' => '20.0',
+            'tax' => '2.4',
+            'currency' => 'USD',
+            'netPriceInUSD' => 20.0,
         ];
 
         $stream->method('getContents')->willReturn(json_encode($returnData));
@@ -531,16 +535,16 @@ class TransactionCloudTest extends TestCase
         $stream = $this->createMock(StreamInterface::class);
         $modelFactory = $this->createMock(ModelFactory::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $email = "iain.cambridge@example.org";
-        $id = "TC-TR_023003";
+        $email = 'iain.cambridge@example.org';
+        $id = 'TC-TR_023003';
 
-        $requestFactory->method('createRequest')->with("POST", sprintf("%s/v1/transaction/%s", TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
+        $requestFactory->method('createRequest')->with('POST', sprintf('%s/v1/transaction/%s', TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
 
         $streamFactory->method('createStream')->with(json_encode(['assignEmail' => $email]))->willReturn($stream);
-        $request->expects($this->once())->method("withBody")->with($stream);
+        $request->expects($this->once())->method('withBody')->with($stream);
 
         $subject = new TransactionCloud($client, $requestFactory, $streamFactory, $modelFactory);
 
@@ -556,16 +560,16 @@ class TransactionCloudTest extends TestCase
         $stream = $this->createMock(StreamInterface::class);
         $modelFactory = $this->createMock(ModelFactory::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $email = "iain.cambridge@example.org";
-        $id = "TC-TR_023003";
+        $email = 'iain.cambridge@example.org';
+        $id = 'TC-TR_023003';
 
-        $requestFactory->method('createRequest')->with("POST", sprintf("%s/v1/transaction/%s", TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
+        $requestFactory->method('createRequest')->with('POST', sprintf('%s/v1/transaction/%s', TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(301);
 
         $streamFactory->method('createStream')->with(json_encode(['assignEmail' => $email]))->willReturn($stream);
-        $request->expects($this->once())->method("withBody")->with($stream);
+        $request->expects($this->once())->method('withBody')->with($stream);
 
         $subject = new TransactionCloud($client, $requestFactory, $streamFactory, $modelFactory);
 
@@ -580,9 +584,9 @@ class TransactionCloudTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $modelFactory = $this->createMock(ModelFactory::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $id = "TC-TR_023003";
+        $id = 'TC-TR_023003';
 
-        $requestFactory->method('createRequest')->with("POST", sprintf("%s/v1/cancel-subscription/%s", TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
+        $requestFactory->method('createRequest')->with('POST', sprintf('%s/v1/cancel-subscription/%s', TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
@@ -601,13 +605,12 @@ class TransactionCloudTest extends TestCase
         $stream = $this->createMock(StreamInterface::class);
         $modelFactory = $this->createMock(ModelFactory::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $id = "TC-TR_023003";
+        $id = 'TC-TR_023003';
 
-        $requestFactory->method('createRequest')->with("POST", sprintf("%s/v1/cancel-subscription/%s", TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
+        $requestFactory->method('createRequest')->with('POST', sprintf('%s/v1/cancel-subscription/%s', TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(301);
-
 
         $subject = new TransactionCloud($client, $requestFactory, $streamFactory, $modelFactory);
 
@@ -624,31 +627,30 @@ class TransactionCloudTest extends TestCase
         $modelFactory = $this->createMock(ModelFactory::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
         $refund = $this->createMock(Refund::class);
-        $id = "TC-TR_040405";
+        $id = 'TC-TR_040405';
 
-        $requestFactory->method('createRequest')->with("POST", sprintf("%s/v1/refund-transaction/%s", TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
+        $requestFactory->method('createRequest')->with('POST', sprintf('%s/v1/refund-transaction/%s', TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
         $response->method('getBody')->willReturn($stream);
 
-
-        $returnData =     [
+        $returnData = [
             'TCFee' => 0.72,
             'amountTotal' => 4.36,
             'currency' => 'USD',
-            'externalId' => "5559995555",
-            "hashId" => "TC-BA_YYYZZZX",
-            "id" => "4/2/2022",
-            "incomeCurrency" => "USD",
-            "invoiceLink" => "https://api.transaction.cloud/invoice/TC-BA_YYYZZZX",
-            "paymentProvider" => "BLUESNAP",
-            "refundable" => false,
-            "taxAmount" => 0.36,
-            "timestamp" => 1643974626000,
-            "transactionFee" => 0.0,
-            "vendorIncome" => 3.28,
-            "country" => "US",
+            'externalId' => '5559995555',
+            'hashId' => 'TC-BA_YYYZZZX',
+            'id' => '4/2/2022',
+            'incomeCurrency' => 'USD',
+            'invoiceLink' => 'https://api.transaction.cloud/invoice/TC-BA_YYYZZZX',
+            'paymentProvider' => 'BLUESNAP',
+            'refundable' => false,
+            'taxAmount' => 0.36,
+            'timestamp' => 1643974626000,
+            'transactionFee' => 0.0,
+            'vendorIncome' => 3.28,
+            'country' => 'US',
         ];
 
         $stream->method('getContents')->willReturn(json_encode($returnData));
@@ -673,31 +675,30 @@ class TransactionCloudTest extends TestCase
         $modelFactory = $this->createMock(ModelFactory::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
         $refund = $this->createMock(Refund::class);
-        $id = "TC-TR_040405";
+        $id = 'TC-TR_040405';
 
-        $requestFactory->method('createRequest')->with("POST", sprintf("%s/v1/refund-transaction/%s", TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
+        $requestFactory->method('createRequest')->with('POST', sprintf('%s/v1/refund-transaction/%s', TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(301);
         $response->method('getBody')->willReturn($stream);
 
-
-        $returnData =     [
+        $returnData = [
             'TCFee' => 0.72,
             'amountTotal' => 4.36,
             'currency' => 'USD',
-            'externalId' => "5559995555",
-            "hashId" => "TC-BA_YYYZZZX",
-            "id" => "4/2/2022",
-            "incomeCurrency" => "USD",
-            "invoiceLink" => "https://api.transaction.cloud/invoice/TC-BA_YYYZZZX",
-            "paymentProvider" => "BLUESNAP",
-            "refundable" => false,
-            "taxAmount" => 0.36,
-            "timestamp" => 1643974626000,
-            "transactionFee" => 0.0,
-            "vendorIncome" => 3.28,
-            "country" => "US",
+            'externalId' => '5559995555',
+            'hashId' => 'TC-BA_YYYZZZX',
+            'id' => '4/2/2022',
+            'incomeCurrency' => 'USD',
+            'invoiceLink' => 'https://api.transaction.cloud/invoice/TC-BA_YYYZZZX',
+            'paymentProvider' => 'BLUESNAP',
+            'refundable' => false,
+            'taxAmount' => 0.36,
+            'timestamp' => 1643974626000,
+            'transactionFee' => 0.0,
+            'vendorIncome' => 3.28,
+            'country' => 'US',
         ];
 
         $stream->method('getContents')->willReturn(json_encode($returnData));
@@ -719,31 +720,30 @@ class TransactionCloudTest extends TestCase
         $stream = $this->createMock(StreamInterface::class);
         $modelFactory = $this->createMock(ModelFactory::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $id = "TC-TR_040405";
+        $id = 'TC-TR_040405';
 
-        $requestFactory->method('createRequest')->with("POST", sprintf("%s/v1/refund-transaction/%s", TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
+        $requestFactory->method('createRequest')->with('POST', sprintf('%s/v1/refund-transaction/%s', TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
         $response->method('getBody')->willReturn($stream);
 
-
-        $returnData =     [
+        $returnData = [
             'TCFee' => 0.72,
             'amountTotal' => 4.36,
             'currency' => 'USD',
-            'externalId' => "5559995555",
-            "hashId" => "TC-BA_YYYZZZX",
-            "id" => "4/2/2022",
-            "incomeCurrency" => "USD",
-            "invoiceLink" => "https://api.transaction.cloud/invoice/TC-BA_YYYZZZX",
-            "paymentProvider" => "BLUESNAP",
-            "refundable" => false,
-            "taxAmount" => 0.36,
-            "timestamp" => 1643974626000,
-            "transactionFee" => 0.0,
-            "vendorIncome" => 3.28,
-            "country" => "US",
+            'externalId' => '5559995555',
+            'hashId' => 'TC-BA_YYYZZZX',
+            'id' => '4/2/2022',
+            'incomeCurrency' => 'USD',
+            'invoiceLink' => 'https://api.transaction.cloud/invoice/TC-BA_YYYZZZX',
+            'paymentProvider' => 'BLUESNAP',
+            'refundable' => false,
+            'taxAmount' => 0.36,
+            'timestamp' => 1643974626000,
+            'transactionFee' => 0.0,
+            'vendorIncome' => 3.28,
+            'country' => 'US',
         ];
 
         $stream->method('getContents')->willReturn(json_encode($returnData));
@@ -765,14 +765,13 @@ class TransactionCloudTest extends TestCase
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
         $changedTransaction = $this->createMock(ChangedTransaction::class);
 
-        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/changed-transactions", TransactionCloud::PROD_API_HOST))->willReturn($request);
+        $requestFactory->method('createRequest')->with('GET', sprintf('%s/v1/changed-transactions', TransactionCloud::PROD_API_HOST))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
         $response->method('getBody')->willReturn($stream);
 
-
-        $returnData =     [
+        $returnData = [
             [
                 'createDate' => '2000-03-23',
                 'lastCharge' => '2001-05-23',
@@ -788,7 +787,7 @@ class TransactionCloudTest extends TestCase
                 'productName' => 'Product Name',
                 'transactionStatus' => 'SUBSCRIPTION_STATUS_ACTIVE',
                 'transactionType' => 'SUBSCRIPTION',
-            ]
+            ],
         ];
 
         $stream->method('getContents')->willReturn(json_encode($returnData));
@@ -810,9 +809,9 @@ class TransactionCloudTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $modelFactory = $this->createMock(ModelFactory::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $id = "TC-TR_023003";
+        $id = 'TC-TR_023003';
 
-        $requestFactory->method('createRequest')->with("POST", sprintf("%s/v1/changed-transactions/%s", TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
+        $requestFactory->method('createRequest')->with('POST', sprintf('%s/v1/changed-transactions/%s', TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
@@ -830,9 +829,9 @@ class TransactionCloudTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $modelFactory = $this->createMock(ModelFactory::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $id = "TC-TR_023003";
+        $id = 'TC-TR_023003';
 
-        $requestFactory->method('createRequest')->with("POST", sprintf("%s/v1/changed-transactions/%s", TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
+        $requestFactory->method('createRequest')->with('POST', sprintf('%s/v1/changed-transactions/%s', TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(401);
@@ -852,8 +851,8 @@ class TransactionCloudTest extends TestCase
         $responseStream = $this->createMock(StreamInterface::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
         $product = $this->createMock(Product::class);
-        $email = "iain.cambridge@example.org";
-        $id = "TC-TR_023003";
+        $email = 'iain.cambridge@example.org';
+        $id = 'TC-TR_023003';
 
         $payload = [
             'prices' => [
@@ -861,27 +860,25 @@ class TransactionCloudTest extends TestCase
             ],
             'description' => 'description',
             'payload' => '',
-            'transactionIdToMigrate' => "TC-TR_X1000"
+            'transactionIdToMigrate' => 'TC-TR_X1000',
         ];
 
         $product->method('getApiPayload')->willReturn($payload);
 
-        $requestFactory->method('createRequest')->with("POST", sprintf("%s/v1/transaction/%s", TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
+        $requestFactory->method('createRequest')->with('POST', sprintf('%s/v1/transaction/%s', TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
         $client->method('sendRequest')->with($request)->willReturn($response);
 
         $response->method('getStatusCode')->willReturn(200);
         $response->method('getBody')->willReturn($responseStream);
 
         $streamFactory->method('createStream')->with(json_encode($payload))->willReturn($requestStream);
-        $request->expects($this->once())->method("withBody")->with($requestStream);
+        $request->expects($this->once())->method('withBody')->with($requestStream);
 
-        $responsePayload = ['link' => "https://hosted.transaction.cloud/payment/product/PC_XXX", 'customProductId' => 'PC_z4wvoA0LjMGVLCBxr0UMzpk+KzRbD82BAr0zuLDNl4lr4MOCxz3YM4XDe6eHswLDusAtyO5Z3qrZ5rdraC5e_KLBVhS_X7znubZuKaLlD8pkRoDtEWd4'];
+        $responsePayload = ['link' => 'https://hosted.transaction.cloud/payment/product/PC_XXX', 'customProductId' => 'PC_z4wvoA0LjMGVLCBxr0UMzpk+KzRbD82BAr0zuLDNl4lr4MOCxz3YM4XDe6eHswLDusAtyO5Z3qrZ5rdraC5e_KLBVhS_X7znubZuKaLlD8pkRoDtEWd4'];
         $responseStream->method('getContents')->willReturn(json_encode($responsePayload));
 
         $subject = new TransactionCloud($client, $requestFactory, $streamFactory);
 
-
         $this->assertInstanceOf(ProductData::class, $subject->customizeProduct($id, $product));
-
     }
 }

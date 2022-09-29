@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ *
+ *     This file is part of the Transaction.Cloud PHP SDK.
+ *     Copyright Humbly Arrogant Ltd 2022
+ *
+ *     This source file is subject to the MIT license that is bundled
+ *     with this source code in the file LICENSE.
+ */
+
 namespace Tests\TransactionCloud\Model;
 
 use PHPUnit\Framework\TestCase;
@@ -18,7 +29,7 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'createDate' to contain date format");
 
         $transactionData = [
-            'createDate' => ''
+            'createDate' => '',
         ];
 
         $subject = new ModelFactory();
@@ -32,7 +43,7 @@ class ModelFactoryTest extends TestCase
 
         $transactionData = [
             'createDate' => '2000-03-23',
-            'lastCharge' => ''
+            'lastCharge' => '',
         ];
 
         $subject = new ModelFactory();
@@ -47,7 +58,7 @@ class ModelFactoryTest extends TestCase
         $transactionData = [
             'createDate' => '2000-03-23',
             'lastCharge' => '2001-05-23',
-            'assignedEmail' => null
+            'assignedEmail' => null,
         ];
 
         $subject = new ModelFactory();
@@ -80,7 +91,7 @@ class ModelFactoryTest extends TestCase
             'lastCharge' => '2001-05-23',
             'assignedEmail' => '',
             'chargeFrequency' => 'WEEKLY',
-            'country' => null
+            'country' => null,
         ];
 
         $subject = new ModelFactory();
@@ -97,7 +108,7 @@ class ModelFactoryTest extends TestCase
             'lastCharge' => '2001-05-23',
             'assignedEmail' => '',
             'chargeFrequency' => 'WEEKLY',
-            'country' => "US",
+            'country' => 'US',
             'email' => null,
         ];
 
@@ -117,7 +128,7 @@ class ModelFactoryTest extends TestCase
             'chargeFrequency' => 'WEEKLY',
             'country' => 'US',
             'email' => 'iain.cambridge@example.org',
-            'id' => null
+            'id' => null,
         ];
 
         $subject = new ModelFactory();
@@ -157,7 +168,7 @@ class ModelFactoryTest extends TestCase
             'email' => 'iain.cambridge@example.org',
             'id' => 'TC-PR_zzzyyxx',
             'payload' => null,
-            'productId' => null
+            'productId' => null,
         ];
 
         $subject = new ModelFactory();
@@ -226,7 +237,7 @@ class ModelFactoryTest extends TestCase
             'productId' => 'TC-PR_dskfjsdl',
             'productName' => 'Product Name',
             'transactionStatus' => 'SUBSCRIPTION_STATUS_ACTIVE',
-            'transactionType' => null
+            'transactionType' => null,
         ];
 
         $subject = new ModelFactory();
@@ -276,9 +287,9 @@ class ModelFactoryTest extends TestCase
             'productName' => 'Product Name',
             'transactionStatus' => 'SUBSCRIPTION_STATUS_ACTIVE',
             'transactionType' => 'SUBSCRIPTION',
-            'netPrice' => "10.3",
+            'netPrice' => '10.3',
             'tax' => null,
-            'currency' => null
+            'currency' => null,
         ];
 
         $subject = new ModelFactory();
@@ -303,9 +314,9 @@ class ModelFactoryTest extends TestCase
             'productName' => 'Product Name',
             'transactionStatus' => 'SUBSCRIPTION_STATUS_ACTIVE',
             'transactionType' => 'SUBSCRIPTION',
-            'netPrice' => "10.3",
-            'tax' => "1.0",
-            'currency' => null
+            'netPrice' => '10.3',
+            'tax' => '1.0',
+            'currency' => null,
         ];
 
         $subject = new ModelFactory();
@@ -327,9 +338,9 @@ class ModelFactoryTest extends TestCase
             'productName' => 'Product Name',
             'transactionStatus' => 'SUBSCRIPTION_STATUS_ACTIVE',
             'transactionType' => 'SUBSCRIPTION',
-            'netPrice' => "10.3",
-            'tax' => "1.0",
-            'currency' => "USD"
+            'netPrice' => '10.3',
+            'tax' => '1.0',
+            'currency' => 'USD',
         ];
 
         $subject = new ModelFactory();
@@ -338,7 +349,8 @@ class ModelFactoryTest extends TestCase
         $this->assertInstanceOf(Transaction::class, $actual);
     }
 
-    public function testRefundInvalidTcFee() {
+    public function testRefundInvalidTcFee()
+    {
         $this->expectException(MissingModelDataException::class);
         $this->expectExceptionMessage("Expected key 'TCFee' to contain a value");
 
@@ -350,7 +362,8 @@ class ModelFactoryTest extends TestCase
         $subject->buildRefund($refundData);
     }
 
-    public function testRefundInvalid_amountTotal() {
+    public function testRefundInvalidAmountTotal()
+    {
         $this->expectException(MissingModelDataException::class);
         $this->expectExceptionMessage("Expected key 'amountTotal' to contain a value");
 
@@ -358,25 +371,26 @@ class ModelFactoryTest extends TestCase
             'TCFee' => 0.72,
             'amountTotal' => null,
             'currency' => 'USD',
-            'externalId' => "5559995555",
-            "hashId" => "TC-BA_YYYZZZX",
-            "id" => "4/2/2022",
-            "incomeCurrency" => "USD",
-            "invoiceLink" => "https://api.transaction.cloud/invoice/TC-BA_YYYZZZX",
-            "paymentProvider" => "BLUESNAP",
-            "refundable" => false,
-            "taxAmount" => 0.36,
-            "timestamp" => 1643974626000,
-            "transactionsFee" => 0.0,
-            "vendorIncome" => 3.28,
-            "country" => null,
+            'externalId' => '5559995555',
+            'hashId' => 'TC-BA_YYYZZZX',
+            'id' => '4/2/2022',
+            'incomeCurrency' => 'USD',
+            'invoiceLink' => 'https://api.transaction.cloud/invoice/TC-BA_YYYZZZX',
+            'paymentProvider' => 'BLUESNAP',
+            'refundable' => false,
+            'taxAmount' => 0.36,
+            'timestamp' => 1643974626000,
+            'transactionsFee' => 0.0,
+            'vendorIncome' => 3.28,
+            'country' => null,
         ];
 
         $subject = new ModelFactory();
         $subject->buildRefund($refundData);
     }
 
-    public function testRefundInvalid_currency() {
+    public function testRefundInvalidCurrency()
+    {
         $this->expectException(MissingModelDataException::class);
         $this->expectExceptionMessage("Expected key 'currency' to contain a value");
 
@@ -384,26 +398,26 @@ class ModelFactoryTest extends TestCase
             'TCFee' => 0.72,
             'amountTotal' => 4.36,
             'currency' => null,
-            'externalId' => "5559995555",
-            "hashId" => "TC-BA_YYYZZZX",
-            "id" => "4/2/2022",
-            "incomeCurrency" => "USD",
-            "invoiceLink" => "https://api.transaction.cloud/invoice/TC-BA_YYYZZZX",
-            "paymentProvider" => "BLUESNAP",
-            "refundable" => false,
-            "taxAmount" => 0.36,
-            "timestamp" => 1643974626000,
-            "transactionsFee" => 0.0,
-            "vendorIncome" => 3.28,
-            "country" => null,
+            'externalId' => '5559995555',
+            'hashId' => 'TC-BA_YYYZZZX',
+            'id' => '4/2/2022',
+            'incomeCurrency' => 'USD',
+            'invoiceLink' => 'https://api.transaction.cloud/invoice/TC-BA_YYYZZZX',
+            'paymentProvider' => 'BLUESNAP',
+            'refundable' => false,
+            'taxAmount' => 0.36,
+            'timestamp' => 1643974626000,
+            'transactionsFee' => 0.0,
+            'vendorIncome' => 3.28,
+            'country' => null,
         ];
 
         $subject = new ModelFactory();
         $subject->buildRefund($refundData);
     }
 
-
-    public function testRefundInvalid_externalId() {
+    public function testRefundInvalidExternalId()
+    {
         $this->expectException(MissingModelDataException::class);
         $this->expectExceptionMessage("Expected key 'externalId' to contain a value");
 
@@ -412,24 +426,25 @@ class ModelFactoryTest extends TestCase
             'amountTotal' => 4.36,
             'currency' => 'USD',
             'externalId' => null,
-            "hashId" => "TC-BA_YYYZZZX",
-            "id" => "4/2/2022",
-            "incomeCurrency" => "USD",
-            "invoiceLink" => "https://api.transaction.cloud/invoice/TC-BA_YYYZZZX",
-            "paymentProvider" => "BLUESNAP",
-            "refundable" => false,
-            "taxAmount" => 0.36,
-            "timestamp" => 1643974626000,
-            "transactionsFee" => 0.0,
-            "vendorIncome" => 3.28,
-            "country" => null,
+            'hashId' => 'TC-BA_YYYZZZX',
+            'id' => '4/2/2022',
+            'incomeCurrency' => 'USD',
+            'invoiceLink' => 'https://api.transaction.cloud/invoice/TC-BA_YYYZZZX',
+            'paymentProvider' => 'BLUESNAP',
+            'refundable' => false,
+            'taxAmount' => 0.36,
+            'timestamp' => 1643974626000,
+            'transactionsFee' => 0.0,
+            'vendorIncome' => 3.28,
+            'country' => null,
         ];
 
         $subject = new ModelFactory();
         $subject->buildRefund($refundData);
     }
 
-    public function testRefundInvalid_hashId() {
+    public function testRefundInvalidHashId()
+    {
         $this->expectException(MissingModelDataException::class);
         $this->expectExceptionMessage("Expected key 'hashId' to contain a value");
 
@@ -437,25 +452,26 @@ class ModelFactoryTest extends TestCase
             'TCFee' => 0.72,
             'amountTotal' => 4.36,
             'currency' => 'USD',
-            'externalId' => "5559995555",
-            "hashId" => null,
-            "id" => "4/2/2022",
-            "incomeCurrency" => "USD",
-            "invoiceLink" => "https://api.transaction.cloud/invoice/TC-BA_YYYZZZX",
-            "paymentProvider" => "BLUESNAP",
-            "refundable" => false,
-            "taxAmount" => 0.36,
-            "timestamp" => 1643974626000,
-            "transactionsFee" => 0.0,
-            "vendorIncome" => 3.28,
-            "country" => null,
+            'externalId' => '5559995555',
+            'hashId' => null,
+            'id' => '4/2/2022',
+            'incomeCurrency' => 'USD',
+            'invoiceLink' => 'https://api.transaction.cloud/invoice/TC-BA_YYYZZZX',
+            'paymentProvider' => 'BLUESNAP',
+            'refundable' => false,
+            'taxAmount' => 0.36,
+            'timestamp' => 1643974626000,
+            'transactionsFee' => 0.0,
+            'vendorIncome' => 3.28,
+            'country' => null,
         ];
 
         $subject = new ModelFactory();
         $subject->buildRefund($refundData);
     }
 
-    public function testRefundInvalid_id() {
+    public function testRefundInvalidId()
+    {
         $this->expectException(MissingModelDataException::class);
         $this->expectExceptionMessage("Expected key 'id' to contain a value");
 
@@ -463,25 +479,26 @@ class ModelFactoryTest extends TestCase
             'TCFee' => 0.72,
             'amountTotal' => 4.36,
             'currency' => 'USD',
-            'externalId' => "5559995555",
-            "hashId" => "TC-BA_YYYZZZX",
-            "id" => null,
-            "incomeCurrency" => "USD",
-            "invoiceLink" => "https://api.transaction.cloud/invoice/TC-BA_YYYZZZX",
-            "paymentProvider" => "BLUESNAP",
-            "refundable" => false,
-            "taxAmount" => 0.36,
-            "timestamp" => 1643974626000,
-            "transactionsFee" => 0.0,
-            "vendorIncome" => 3.28,
-            "country" => null,
+            'externalId' => '5559995555',
+            'hashId' => 'TC-BA_YYYZZZX',
+            'id' => null,
+            'incomeCurrency' => 'USD',
+            'invoiceLink' => 'https://api.transaction.cloud/invoice/TC-BA_YYYZZZX',
+            'paymentProvider' => 'BLUESNAP',
+            'refundable' => false,
+            'taxAmount' => 0.36,
+            'timestamp' => 1643974626000,
+            'transactionsFee' => 0.0,
+            'vendorIncome' => 3.28,
+            'country' => null,
         ];
 
         $subject = new ModelFactory();
         $subject->buildRefund($refundData);
     }
 
-    public function testRefundInvalid_incomeCurrency() {
+    public function testRefundInvalidIncomeCurrency()
+    {
         $this->expectException(MissingModelDataException::class);
         $this->expectExceptionMessage("Expected key 'incomeCurrency' to contain a value");
 
@@ -489,25 +506,26 @@ class ModelFactoryTest extends TestCase
             'TCFee' => 0.72,
             'amountTotal' => 4.36,
             'currency' => 'USD',
-            'externalId' => "5559995555",
-            "hashId" => "TC-BA_YYYZZZX",
-            "id" => "4/2/2022",
-            "incomeCurrency" => null,
-            "invoiceLink" => "https://api.transaction.cloud/invoice/TC-BA_YYYZZZX",
-            "paymentProvider" => "BLUESNAP",
-            "refundable" => false,
-            "taxAmount" => 0.36,
-            "timestamp" => 1643974626000,
-            "transactionsFee" => 0.0,
-            "vendorIncome" => 3.28,
-            "country" => null,
+            'externalId' => '5559995555',
+            'hashId' => 'TC-BA_YYYZZZX',
+            'id' => '4/2/2022',
+            'incomeCurrency' => null,
+            'invoiceLink' => 'https://api.transaction.cloud/invoice/TC-BA_YYYZZZX',
+            'paymentProvider' => 'BLUESNAP',
+            'refundable' => false,
+            'taxAmount' => 0.36,
+            'timestamp' => 1643974626000,
+            'transactionsFee' => 0.0,
+            'vendorIncome' => 3.28,
+            'country' => null,
         ];
 
         $subject = new ModelFactory();
         $subject->buildRefund($refundData);
     }
 
-    public function testRefundInvalid_invoiceLink() {
+    public function testRefundInvalidInvoiceLink()
+    {
         $this->expectException(MissingModelDataException::class);
         $this->expectExceptionMessage("Expected key 'invoiceLink' to contain a value");
 
@@ -515,25 +533,26 @@ class ModelFactoryTest extends TestCase
             'TCFee' => 0.72,
             'amountTotal' => 4.36,
             'currency' => 'USD',
-            'externalId' => "5559995555",
-            "hashId" => "TC-BA_YYYZZZX",
-            "id" => "4/2/2022",
-            "incomeCurrency" => "USD",
-            "invoiceLink" => null,
-            "paymentProvider" => "BLUESNAP",
-            "refundable" => false,
-            "taxAmount" => 0.36,
-            "timestamp" => 1643974626000,
-            "transactionsFee" => 0.0,
-            "vendorIncome" => 3.28,
-            "country" => null,
+            'externalId' => '5559995555',
+            'hashId' => 'TC-BA_YYYZZZX',
+            'id' => '4/2/2022',
+            'incomeCurrency' => 'USD',
+            'invoiceLink' => null,
+            'paymentProvider' => 'BLUESNAP',
+            'refundable' => false,
+            'taxAmount' => 0.36,
+            'timestamp' => 1643974626000,
+            'transactionsFee' => 0.0,
+            'vendorIncome' => 3.28,
+            'country' => null,
         ];
 
         $subject = new ModelFactory();
         $subject->buildRefund($refundData);
     }
 
-    public function testRefundInvalid_paymentProvider() {
+    public function testRefundInvalidPaymentProvider()
+    {
         $this->expectException(MissingModelDataException::class);
         $this->expectExceptionMessage("Expected key 'paymentProvider' to contain a value");
 
@@ -541,25 +560,26 @@ class ModelFactoryTest extends TestCase
             'TCFee' => 0.72,
             'amountTotal' => 4.36,
             'currency' => 'USD',
-            'externalId' => "5559995555",
-            "hashId" => "TC-BA_YYYZZZX",
-            "id" => "4/2/2022",
-            "incomeCurrency" => "USD",
-            "invoiceLink" => "https://api.transaction.cloud/invoice/TC-BA_YYYZZZX",
-            "paymentProvider" => null,
-            "refundable" => false,
-            "taxAmount" => 0.36,
-            "timestamp" => 1643974626000,
-            "transactionsFee" => 0.0,
-            "vendorIncome" => 3.28,
-            "country" => null,
+            'externalId' => '5559995555',
+            'hashId' => 'TC-BA_YYYZZZX',
+            'id' => '4/2/2022',
+            'incomeCurrency' => 'USD',
+            'invoiceLink' => 'https://api.transaction.cloud/invoice/TC-BA_YYYZZZX',
+            'paymentProvider' => null,
+            'refundable' => false,
+            'taxAmount' => 0.36,
+            'timestamp' => 1643974626000,
+            'transactionsFee' => 0.0,
+            'vendorIncome' => 3.28,
+            'country' => null,
         ];
 
         $subject = new ModelFactory();
         $subject->buildRefund($refundData);
     }
 
-    public function testRefundInvalid_refundable() {
+    public function testRefundInvalidRefundable()
+    {
         $this->expectException(MissingModelDataException::class);
         $this->expectExceptionMessage("Expected key 'refundable' to contain a value");
 
@@ -567,25 +587,26 @@ class ModelFactoryTest extends TestCase
             'TCFee' => 0.72,
             'amountTotal' => 4.36,
             'currency' => 'USD',
-            'externalId' => "5559995555",
-            "hashId" => "TC-BA_YYYZZZX",
-            "id" => "4/2/2022",
-            "incomeCurrency" => "USD",
-            "invoiceLink" => "https://api.transaction.cloud/invoice/TC-BA_YYYZZZX",
-            "paymentProvider" => "BLUESNAP",
-            "refundable" => null,
-            "taxAmount" => 0.36,
-            "timestamp" => 1643974626000,
-            "transactionsFee" => 0.0,
-            "vendorIncome" => 3.28,
-            "country" => null,
+            'externalId' => '5559995555',
+            'hashId' => 'TC-BA_YYYZZZX',
+            'id' => '4/2/2022',
+            'incomeCurrency' => 'USD',
+            'invoiceLink' => 'https://api.transaction.cloud/invoice/TC-BA_YYYZZZX',
+            'paymentProvider' => 'BLUESNAP',
+            'refundable' => null,
+            'taxAmount' => 0.36,
+            'timestamp' => 1643974626000,
+            'transactionsFee' => 0.0,
+            'vendorIncome' => 3.28,
+            'country' => null,
         ];
 
         $subject = new ModelFactory();
         $subject->buildRefund($refundData);
     }
 
-    public function testRefundInvalid_taxAmount() {
+    public function testRefundInvalidTaxAmount()
+    {
         $this->expectException(MissingModelDataException::class);
         $this->expectExceptionMessage("Expected key 'taxAmount' to contain a value");
 
@@ -593,25 +614,26 @@ class ModelFactoryTest extends TestCase
             'TCFee' => 0.72,
             'amountTotal' => 4.36,
             'currency' => 'USD',
-            'externalId' => "5559995555",
-            "hashId" => "TC-BA_YYYZZZX",
-            "id" => "4/2/2022",
-            "incomeCurrency" => "USD",
-            "invoiceLink" => "https://api.transaction.cloud/invoice/TC-BA_YYYZZZX",
-            "paymentProvider" => "BLUESNAP",
-            "refundable" => false,
-            "taxAmount" => null,
-            "timestamp" => 1643974626000,
-            "transactionsFee" => 0.0,
-            "vendorIncome" => 3.28,
-            "country" => null,
+            'externalId' => '5559995555',
+            'hashId' => 'TC-BA_YYYZZZX',
+            'id' => '4/2/2022',
+            'incomeCurrency' => 'USD',
+            'invoiceLink' => 'https://api.transaction.cloud/invoice/TC-BA_YYYZZZX',
+            'paymentProvider' => 'BLUESNAP',
+            'refundable' => false,
+            'taxAmount' => null,
+            'timestamp' => 1643974626000,
+            'transactionsFee' => 0.0,
+            'vendorIncome' => 3.28,
+            'country' => null,
         ];
 
         $subject = new ModelFactory();
         $subject->buildRefund($refundData);
     }
 
-    public function testRefundInvalid_timestamp() {
+    public function testRefundInvalidTimestamp()
+    {
         $this->expectException(MissingModelDataException::class);
         $this->expectExceptionMessage("Expected key 'timestamp' to contain a value");
 
@@ -619,25 +641,26 @@ class ModelFactoryTest extends TestCase
             'TCFee' => 0.72,
             'amountTotal' => 4.36,
             'currency' => 'USD',
-            'externalId' => "5559995555",
-            "hashId" => "TC-BA_YYYZZZX",
-            "id" => "4/2/2022",
-            "incomeCurrency" => "USD",
-            "invoiceLink" => "https://api.transaction.cloud/invoice/TC-BA_YYYZZZX",
-            "paymentProvider" => "BLUESNAP",
-            "refundable" => false,
-            "taxAmount" => 0.36,
-            "timestamp" => null,
-            "transactionsFee" => 0.0,
-            "vendorIncome" => 3.28,
-            "country" => null,
+            'externalId' => '5559995555',
+            'hashId' => 'TC-BA_YYYZZZX',
+            'id' => '4/2/2022',
+            'incomeCurrency' => 'USD',
+            'invoiceLink' => 'https://api.transaction.cloud/invoice/TC-BA_YYYZZZX',
+            'paymentProvider' => 'BLUESNAP',
+            'refundable' => false,
+            'taxAmount' => 0.36,
+            'timestamp' => null,
+            'transactionsFee' => 0.0,
+            'vendorIncome' => 3.28,
+            'country' => null,
         ];
 
         $subject = new ModelFactory();
         $subject->buildRefund($refundData);
     }
 
-    public function testRefundInvalid_transactionFee() {
+    public function testRefundInvalidTransactionFee()
+    {
         $this->expectException(MissingModelDataException::class);
         $this->expectExceptionMessage("Expected key 'transactionFee' to contain a value");
 
@@ -645,25 +668,26 @@ class ModelFactoryTest extends TestCase
             'TCFee' => 0.72,
             'amountTotal' => 4.36,
             'currency' => 'USD',
-            'externalId' => "5559995555",
-            "hashId" => "TC-BA_YYYZZZX",
-            "id" => "4/2/2022",
-            "incomeCurrency" => "USD",
-            "invoiceLink" => "https://api.transaction.cloud/invoice/TC-BA_YYYZZZX",
-            "paymentProvider" => "BLUESNAP",
-            "refundable" => false,
-            "taxAmount" => 0.36,
-            "timestamp" => 1643974626000,
-            "transactionFee" => null,
-            "vendorIncome" => 3.28,
-            "country" => null,
+            'externalId' => '5559995555',
+            'hashId' => 'TC-BA_YYYZZZX',
+            'id' => '4/2/2022',
+            'incomeCurrency' => 'USD',
+            'invoiceLink' => 'https://api.transaction.cloud/invoice/TC-BA_YYYZZZX',
+            'paymentProvider' => 'BLUESNAP',
+            'refundable' => false,
+            'taxAmount' => 0.36,
+            'timestamp' => 1643974626000,
+            'transactionFee' => null,
+            'vendorIncome' => 3.28,
+            'country' => null,
         ];
 
         $subject = new ModelFactory();
         $subject->buildRefund($refundData);
     }
 
-    public function testRefundInvalid_vendorIncome() {
+    public function testRefundInvalidVendorIncome()
+    {
         $this->expectException(MissingModelDataException::class);
         $this->expectExceptionMessage("Expected key 'vendorIncome' to contain a value");
 
@@ -671,25 +695,26 @@ class ModelFactoryTest extends TestCase
             'TCFee' => 0.72,
             'amountTotal' => 4.36,
             'currency' => 'USD',
-            'externalId' => "5559995555",
-            "hashId" => "TC-BA_YYYZZZX",
-            "id" => "4/2/2022",
-            "incomeCurrency" => "USD",
-            "invoiceLink" => "https://api.transaction.cloud/invoice/TC-BA_YYYZZZX",
-            "paymentProvider" => "BLUESNAP",
-            "refundable" => false,
-            "taxAmount" => 0.36,
-            "timestamp" => 1643974626000,
-            "transactionFee" => 0.0,
-            "vendorIncome" => null,
-            "country" => null,
+            'externalId' => '5559995555',
+            'hashId' => 'TC-BA_YYYZZZX',
+            'id' => '4/2/2022',
+            'incomeCurrency' => 'USD',
+            'invoiceLink' => 'https://api.transaction.cloud/invoice/TC-BA_YYYZZZX',
+            'paymentProvider' => 'BLUESNAP',
+            'refundable' => false,
+            'taxAmount' => 0.36,
+            'timestamp' => 1643974626000,
+            'transactionFee' => 0.0,
+            'vendorIncome' => null,
+            'country' => null,
         ];
 
         $subject = new ModelFactory();
         $subject->buildRefund($refundData);
     }
 
-    public function testRefundInvalidcountry() {
+    public function testRefundInvalidcountry()
+    {
         $this->expectException(MissingModelDataException::class);
         $this->expectExceptionMessage("Expected key 'country' to contain a value");
 
@@ -697,42 +722,42 @@ class ModelFactoryTest extends TestCase
             'TCFee' => 0.72,
             'amountTotal' => 4.36,
             'currency' => 'USD',
-            'externalId' => "5559995555",
-            "hashId" => "TC-BA_YYYZZZX",
-            "id" => "4/2/2022",
-            "incomeCurrency" => "USD",
-            "invoiceLink" => "https://api.transaction.cloud/invoice/TC-BA_YYYZZZX",
-            "paymentProvider" => "BLUESNAP",
-            "refundable" => false,
-            "taxAmount" => 0.36,
-            "timestamp" => 1643974626000,
-            "transactionFee" => 0.0,
-            "vendorIncome" => 3.28,
-            "country" => null,
+            'externalId' => '5559995555',
+            'hashId' => 'TC-BA_YYYZZZX',
+            'id' => '4/2/2022',
+            'incomeCurrency' => 'USD',
+            'invoiceLink' => 'https://api.transaction.cloud/invoice/TC-BA_YYYZZZX',
+            'paymentProvider' => 'BLUESNAP',
+            'refundable' => false,
+            'taxAmount' => 0.36,
+            'timestamp' => 1643974626000,
+            'transactionFee' => 0.0,
+            'vendorIncome' => 3.28,
+            'country' => null,
         ];
 
         $subject = new ModelFactory();
         $subject->buildRefund($refundData);
     }
 
-    public function testRefundValid() {
-
+    public function testRefundValid()
+    {
         $refundData = [
             'TCFee' => 0.72,
             'amountTotal' => 4.36,
             'currency' => 'USD',
-            'externalId' => "5559995555",
-            "hashId" => "TC-BA_YYYZZZX",
-            "id" => "4/2/2022",
-            "incomeCurrency" => "USD",
-            "invoiceLink" => "https://api.transaction.cloud/invoice/TC-BA_YYYZZZX",
-            "paymentProvider" => "BLUESNAP",
-            "refundable" => false,
-            "taxAmount" => 0.36,
-            "timestamp" => 1643974626000,
-            "transactionFee" => 0.0,
-            "vendorIncome" => 3.28,
-            "country" => "US",
+            'externalId' => '5559995555',
+            'hashId' => 'TC-BA_YYYZZZX',
+            'id' => '4/2/2022',
+            'incomeCurrency' => 'USD',
+            'invoiceLink' => 'https://api.transaction.cloud/invoice/TC-BA_YYYZZZX',
+            'paymentProvider' => 'BLUESNAP',
+            'refundable' => false,
+            'taxAmount' => 0.36,
+            'timestamp' => 1643974626000,
+            'transactionFee' => 0.0,
+            'vendorIncome' => 3.28,
+            'country' => 'US',
         ];
 
         $subject = new ModelFactory();
@@ -747,7 +772,7 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'createDate' to contain date format");
 
         $transactionData = [
-            'createDate' => ''
+            'createDate' => '',
         ];
 
         $subject = new ModelFactory();
@@ -761,13 +786,12 @@ class ModelFactoryTest extends TestCase
 
         $transactionData = [
             'createDate' => '2000-03-23',
-            'lastCharge' => ''
+            'lastCharge' => '',
         ];
 
         $subject = new ModelFactory();
         $subject->buildChangedTransaction($transactionData);
     }
-
 
     public function testChangedTransactionInvalidNextChargeEmptyString()
     {
@@ -777,7 +801,7 @@ class ModelFactoryTest extends TestCase
         $transactionData = [
             'createDate' => '2000-03-23',
             'lastCharge' => '2000-05-23',
-            'nextCharge' => ''
+            'nextCharge' => '',
         ];
 
         $subject = new ModelFactory();
@@ -793,7 +817,7 @@ class ModelFactoryTest extends TestCase
             'createDate' => '2000-03-23',
             'lastCharge' => '2001-05-23',
             'nextCharge' => '2001-06-23',
-            'assignedEmail' => null
+            'assignedEmail' => null,
         ];
 
         $subject = new ModelFactory();
@@ -847,7 +871,7 @@ class ModelFactoryTest extends TestCase
             'assignedEmail' => '',
             'changedStatus' => 'CHANGED_STATUS_NEW',
             'chargeFrequency' => 'WEEKLY',
-            'country' => null
+            'country' => null,
         ];
 
         $subject = new ModelFactory();
@@ -866,7 +890,7 @@ class ModelFactoryTest extends TestCase
             'assignedEmail' => '',
             'changedStatus' => 'CHANGED_STATUS_NEW',
             'chargeFrequency' => 'WEEKLY',
-            'country' => "US",
+            'country' => 'US',
             'email' => null,
         ];
 
@@ -888,7 +912,7 @@ class ModelFactoryTest extends TestCase
             'chargeFrequency' => 'WEEKLY',
             'country' => 'US',
             'email' => 'iain.cambridge@example.org',
-            'id' => null
+            'id' => null,
         ];
 
         $subject = new ModelFactory();
@@ -932,7 +956,7 @@ class ModelFactoryTest extends TestCase
             'email' => 'iain.cambridge@example.org',
             'id' => 'TC-PR_zzzyyxx',
             'payload' => null,
-            'productId' => null
+            'productId' => null,
         ];
 
         $subject = new ModelFactory();
@@ -1007,7 +1031,7 @@ class ModelFactoryTest extends TestCase
             'productId' => 'TC-PR_dskfjsdl',
             'productName' => 'Product Name',
             'transactionStatus' => 'SUBSCRIPTION_STATUS_ACTIVE',
-            'transactionType' => null
+            'transactionType' => null,
         ];
 
         $subject = new ModelFactory();
@@ -1039,8 +1063,6 @@ class ModelFactoryTest extends TestCase
         $this->assertInstanceOf(ChangedTransaction::class, $actual);
     }
 
-
-
     public function testProductDataLinkMissing()
     {
         $this->expectException(MissingModelDataException::class);
@@ -1048,7 +1070,7 @@ class ModelFactoryTest extends TestCase
 
         $transactionData = [
             'link' => null,
-            'customProductId' => "PC_z4wvoA0LjMGVLCBxr0UMzpk+KzRbD82BAr0zuLDNl4lr4MOCxz3YM4XDe6eHswLDusAtyO5Z3qrZ5rdraC5e_KLBVhS_X7znubZuKaLlD8pkRoDtEWd4",
+            'customProductId' => 'PC_z4wvoA0LjMGVLCBxr0UMzpk+KzRbD82BAr0zuLDNl4lr4MOCxz3YM4XDe6eHswLDusAtyO5Z3qrZ5rdraC5e_KLBVhS_X7znubZuKaLlD8pkRoDtEWd4',
         ];
 
         $subject = new ModelFactory();
@@ -1061,7 +1083,7 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'customProductId' to contain a string");
 
         $transactionData = [
-            'link' => "http://example.org",
+            'link' => 'http://example.org',
             'customProductId' => null,
         ];
 
@@ -1072,8 +1094,8 @@ class ModelFactoryTest extends TestCase
     public function testValidProductData()
     {
         $transactionData = [
-            'link' => "http://example.org",
-            'customProductId' => "PC_z4wvoA0LjMGVLCBxr0UMzpk+KzRbD82BAr0zuLDNl4lr4MOCxz3YM4XDe6eHswLDusAtyO5Z3qrZ5rdraC5e_KLBVhS_X7znubZuKaLlD8pkRoDtEWd4",
+            'link' => 'http://example.org',
+            'customProductId' => 'PC_z4wvoA0LjMGVLCBxr0UMzpk+KzRbD82BAr0zuLDNl4lr4MOCxz3YM4XDe6eHswLDusAtyO5Z3qrZ5rdraC5e_KLBVhS_X7znubZuKaLlD8pkRoDtEWd4',
         ];
 
         $subject = new ModelFactory();

@@ -1,30 +1,37 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ *
+ *     This file is part of the Transaction.Cloud PHP SDK.
+ *     Copyright Humbly Arrogant Ltd 2022
+ *
+ *     This source file is subject to the MIT license that is bundled
+ *     with this source code in the file LICENSE.
+ */
+
 namespace TransactionCloud\Model;
 
 use Brick\Math\BigNumber;
 use Brick\Money\Currency;
 use Brick\Money\Money;
-use Brick\Money\MoneyBag;
-use TransactionCloud\Exception\MalformedResponseException;
 use TransactionCloud\Exception\MissingModelDataException;
 
 class ModelFactory
 {
     /**
-     * @param array $transaction
-     * @return Transaction
      * @throws MissingModelDataException
      */
     public function buildTransaction(array $transaction): Transaction
     {
-        $createDate = \DateTime::createFromFormat("Y-m-d", $transaction['createDate']);
-        if ($createDate === false) {
+        $createDate = \DateTime::createFromFormat('Y-m-d', $transaction['createDate']);
+        if (false === $createDate) {
             throw new MissingModelDataException("Expected key 'createDate' to contain date format");
         }
 
-        $lastCharge = \DateTime::createFromFormat("Y-m-d", $transaction['lastCharge']);
-        if ($lastCharge === false) {
+        $lastCharge = \DateTime::createFromFormat('Y-m-d', $transaction['lastCharge']);
+        if (false === $lastCharge) {
             throw new MissingModelDataException("Expected key 'lastCharge' to contain date format");
         }
 
@@ -184,24 +191,24 @@ class ModelFactory
     }
 
     /**
-     * @param array $transaction
      * @return Transaction
+     *
      * @throws MissingModelDataException
      */
     public function buildChangedTransaction(array $transaction): ChangedTransaction
     {
-        $createDate = \DateTime::createFromFormat("Y-m-d", $transaction['createDate']);
-        if ($createDate === false) {
+        $createDate = \DateTime::createFromFormat('Y-m-d', $transaction['createDate']);
+        if (false === $createDate) {
             throw new MissingModelDataException("Expected key 'createDate' to contain date format");
         }
 
-        $lastCharge = \DateTime::createFromFormat("Y-m-d", $transaction['lastCharge']);
-        if ($lastCharge === false) {
+        $lastCharge = \DateTime::createFromFormat('Y-m-d', $transaction['lastCharge']);
+        if (false === $lastCharge) {
             throw new MissingModelDataException("Expected key 'lastCharge' to contain date format");
         }
 
-        $nextCharge = \DateTime::createFromFormat("Y-m-d", $transaction['nextCharge']);
-        if ($nextCharge === false) {
+        $nextCharge = \DateTime::createFromFormat('Y-m-d', $transaction['nextCharge']);
+        if (false === $nextCharge) {
             throw new MissingModelDataException("Expected key 'nextCharge' to contain date format");
         }
 
@@ -272,7 +279,7 @@ class ModelFactory
         if (!isset($productData['customProductId'])) {
             throw new MissingModelDataException("Expected key 'customProductId' to contain a string");
         }
-        
+
         return new ProductData(
             $productData['link'],
             $productData['customProductId'],

@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ *
+ *     This file is part of the Transaction.Cloud PHP SDK.
+ *     Copyright Humbly Arrogant Ltd 2022
+ *
+ *     This source file is subject to the MIT license that is bundled
+ *     with this source code in the file LICENSE.
+ */
+
 namespace TransactionCloud\Model;
 
 use Brick\Money\Currency;
@@ -71,49 +82,31 @@ class Refund
         $this->country = $country;
     }
 
-    /**
-     * @return Money
-     */
     public function getTransactionCloudFee(): Money
     {
         return $this->transactionCloudFee;
     }
 
-    /**
-     * @return Money
-     */
     public function getAmountTotal(): Money
     {
         return $this->amountTotal;
     }
 
-    /**
-     * @return string
-     */
     public function getCurrency(): string
     {
         return $this->currency;
     }
 
-    /**
-     * @return string
-     */
     public function getExternalId(): string
     {
         return $this->externalId;
     }
 
-    /**
-     * @return string
-     */
     public function getHashId(): string
     {
         return $this->hashId;
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
@@ -127,65 +120,41 @@ class Refund
         return $this->incomeCurrency;
     }
 
-    /**
-     * @return string
-     */
     public function getInvoiceLink(): string
     {
         return $this->invoiceLink;
     }
 
-    /**
-     * @return string
-     */
     public function getPaymentProvider(): string
     {
         return $this->paymentProvider;
     }
 
-    /**
-     * @return bool
-     */
     public function isRefundable(): bool
     {
         return $this->refundable;
     }
 
-    /**
-     * @return Money
-     */
     public function getTaxAmount(): Money
     {
         return $this->taxAmount;
     }
 
-    /**
-     * @return \DateTimeInterface
-     */
     public function getTimestamp(): \DateTimeInterface
     {
         return $this->timestamp;
     }
 
-    /**
-     * @return Money
-     */
     public function getTransactionFee(): Money
     {
         return $this->transactionFee;
     }
 
-    /**
-     * @return Money
-     */
     public function getVendorIncome(): Money
     {
         return $this->vendorIncome;
     }
 
-    /**
-     * @return string
-     */
     public function getCountry(): string
     {
         return $this->country;

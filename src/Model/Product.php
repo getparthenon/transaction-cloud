@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ *
+ *     This file is part of the Transaction.Cloud PHP SDK.
+ *     Copyright Humbly Arrogant Ltd 2022
+ *
+ *     This source file is subject to the MIT license that is bundled
+ *     with this source code in the file LICENSE.
+ */
+
 namespace TransactionCloud\Model;
 
 use Brick\Money\Money;
@@ -11,13 +22,13 @@ class Product
      */
     private array $prices = [];
 
-    private string $description = "";
+    private string $description = '';
 
-    private string $payload = "";
+    private string $payload = '';
 
-    private string $transactionIdToMigrate = "";
+    private string $transactionIdToMigrate = '';
 
-    public function __construct(array $prices = [], string $description = "", string $payload = "", string $transactionIdToMigrate = "")
+    public function __construct(array $prices = [], string $description = '', string $payload = '', string $transactionIdToMigrate = '')
     {
         $this->prices = $prices;
         $this->description = $description;
@@ -65,7 +76,7 @@ class Product
         $this->transactionIdToMigrate = $transactionIdToMigrate;
     }
 
-    public function getApiPayload() : array
+    public function getApiPayload(): array
     {
         $prices = [];
 

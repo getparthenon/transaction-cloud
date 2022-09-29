@@ -1,9 +1,17 @@
 <?php
 
-namespace TransactionCloud\Model;
+declare(strict_types=1);
 
-use Brick\Money\Currency;
-use Brick\Money\Money;
+/*
+ *
+ *     This file is part of the Transaction.Cloud PHP SDK.
+ *     Copyright Humbly Arrogant Ltd 2022
+ *
+ *     This source file is subject to the MIT license that is bundled
+ *     with this source code in the file LICENSE.
+ */
+
+namespace TransactionCloud\Model;
 
 class ChangedTransaction
 {
@@ -37,8 +45,7 @@ class ChangedTransaction
         string $productName,
         string $transactionStatus,
         string $transactionType
-    )
-    {
+    ) {
         $this->assignedEmail = $assignedEmail;
         $this->changedStatus = $changedStatus;
         $this->chargeFrequency = $chargeFrequency;
