@@ -192,4 +192,32 @@ final class TransactionCloud implements ClientInterface
             throw new MalformedResponseException($response, $e->getMessage(), $e->getCode(), $e);
         }
     }
+
+    public function fetchChangedTransactions(): array
+    {
+        $request = $this->requestFactory->createRequest("GET", sprintf("%s/v1/changed-transactions", $this->baseUrl));
+
+        $response = $this->client->sendRequest($request);
+
+        if ($response->getStatusCode() !== 200) {
+            throw new InvalidResponseException($response);
+        }
+
+        $jsonData = json_decode($response->getBody()->getContents(), true);
+
+        if ($jsonData === null) {
+            throw new MalformedResponseException($response, "Expected return body to contain valid json");
+        }
+
+        $output = [];
+        try {
+            foreach ($jsonData as $row) {
+                $output[] = $this->modelFactory->buildChangedTransaction($row);
+            }
+        } catch (MissingModelDataException $e) {
+            throw new MalformedResponseException($response, $e->getMessage(), $e->getCode(), $e);
+        }
+
+        return $output;
+    }
 }

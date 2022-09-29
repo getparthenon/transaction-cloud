@@ -4,6 +4,7 @@ namespace Tests\TransactionCloud\Model;
 
 use PHPUnit\Framework\TestCase;
 use TransactionCloud\Exception\MissingModelDataException;
+use TransactionCloud\Model\ChangedTransaction;
 use TransactionCloud\Model\ModelFactory;
 use TransactionCloud\Model\Refund;
 use TransactionCloud\Model\Transaction;
@@ -737,5 +738,303 @@ class ModelFactoryTest extends TestCase
         $actual = $subject->buildRefund($refundData);
 
         $this->assertInstanceOf(Refund::class, $actual);
+    }
+
+    public function testChangedTransactionInvalidCreateDateEmptyString()
+    {
+        $this->expectException(MissingModelDataException::class);
+        $this->expectExceptionMessage("Expected key 'createDate' to contain date format");
+
+        $transactionData = [
+            'createDate' => ''
+        ];
+
+        $subject = new ModelFactory();
+        $subject->buildChangedTransaction($transactionData);
+    }
+
+    public function testChangedTransactionInvalidLastChargeEmptyString()
+    {
+        $this->expectException(MissingModelDataException::class);
+        $this->expectExceptionMessage("Expected key 'lastCharge' to contain date format");
+
+        $transactionData = [
+            'createDate' => '2000-03-23',
+            'lastCharge' => ''
+        ];
+
+        $subject = new ModelFactory();
+        $subject->buildChangedTransaction($transactionData);
+    }
+
+
+    public function testChangedTransactionInvalidNextChargeEmptyString()
+    {
+        $this->expectException(MissingModelDataException::class);
+        $this->expectExceptionMessage("Expected key 'nextCharge' to contain date format");
+
+        $transactionData = [
+            'createDate' => '2000-03-23',
+            'lastCharge' => '2000-05-23',
+            'nextCharge' => ''
+        ];
+
+        $subject = new ModelFactory();
+        $subject->buildChangedTransaction($transactionData);
+    }
+
+    public function testChangedTransactionInvalidAssignedEmail()
+    {
+        $this->expectException(MissingModelDataException::class);
+        $this->expectExceptionMessage("Expected key 'assignedEmail' to contain a string");
+
+        $transactionData = [
+            'createDate' => '2000-03-23',
+            'lastCharge' => '2001-05-23',
+            'nextCharge' => '2001-06-23',
+            'assignedEmail' => null
+        ];
+
+        $subject = new ModelFactory();
+        $subject->buildChangedTransaction($transactionData);
+    }
+
+    public function testChangedTransactionInvalidChargedStatus()
+    {
+        $this->expectException(MissingModelDataException::class);
+        $this->expectExceptionMessage("Expected key 'changedStatus' to contain a string");
+
+        $transactionData = [
+            'createDate' => '2000-03-23',
+            'lastCharge' => '2001-05-23',
+            'nextCharge' => '2001-06-23',
+            'assignedEmail' => '',
+            'changedStatus' => null,
+        ];
+
+        $subject = new ModelFactory();
+        $subject->buildChangedTransaction($transactionData);
+    }
+
+    public function testChangedTransactionInvalidChargeFrequency()
+    {
+        $this->expectException(MissingModelDataException::class);
+        $this->expectExceptionMessage("Expected key 'chargeFrequency' to contain a string");
+
+        $transactionData = [
+            'createDate' => '2000-03-23',
+            'lastCharge' => '2001-05-23',
+            'nextCharge' => '2001-06-23',
+            'assignedEmail' => '',
+            'changedStatus' => 'CHANGED_STATUS_NEW',
+            'chargeFrequency' => null,
+        ];
+
+        $subject = new ModelFactory();
+        $subject->buildChangedTransaction($transactionData);
+    }
+
+    public function testChangedTransactionInvalidCountry()
+    {
+        $this->expectException(MissingModelDataException::class);
+        $this->expectExceptionMessage("Expected key 'country' to contain a string");
+
+        $transactionData = [
+            'createDate' => '2000-03-23',
+            'lastCharge' => '2001-05-23',
+            'nextCharge' => '2001-06-23',
+            'assignedEmail' => '',
+            'changedStatus' => 'CHANGED_STATUS_NEW',
+            'chargeFrequency' => 'WEEKLY',
+            'country' => null
+        ];
+
+        $subject = new ModelFactory();
+        $subject->buildChangedTransaction($transactionData);
+    }
+
+    public function testChangedTransactionInvalidEmail()
+    {
+        $this->expectException(MissingModelDataException::class);
+        $this->expectExceptionMessage("Expected key 'email' to contain a string");
+
+        $transactionData = [
+            'createDate' => '2000-03-23',
+            'lastCharge' => '2001-05-23',
+            'nextCharge' => '2001-06-23',
+            'assignedEmail' => '',
+            'changedStatus' => 'CHANGED_STATUS_NEW',
+            'chargeFrequency' => 'WEEKLY',
+            'country' => "US",
+            'email' => null,
+        ];
+
+        $subject = new ModelFactory();
+        $subject->buildChangedTransaction($transactionData);
+    }
+
+    public function testChangedTransactionInvalidId()
+    {
+        $this->expectException(MissingModelDataException::class);
+        $this->expectExceptionMessage("Expected key 'id' to contain a string");
+
+        $transactionData = [
+            'createDate' => '2000-03-23',
+            'lastCharge' => '2001-05-23',
+            'nextCharge' => '2001-06-23',
+            'assignedEmail' => '',
+            'changedStatus' => 'CHANGED_STATUS_NEW',
+            'chargeFrequency' => 'WEEKLY',
+            'country' => 'US',
+            'email' => 'iain.cambridge@example.org',
+            'id' => null
+        ];
+
+        $subject = new ModelFactory();
+        $subject->buildChangedTransaction($transactionData);
+    }
+
+    public function testChangedTransactionInvalidPayload()
+    {
+        $this->expectException(MissingModelDataException::class);
+        $this->expectExceptionMessage("Expected key 'payload' to contain a string or null");
+
+        $transactionData = [
+            'createDate' => '2000-03-23',
+            'lastCharge' => '2001-05-23',
+            'nextCharge' => '2001-06-23',
+            'assignedEmail' => '',
+            'changedStatus' => 'CHANGED_STATUS_NEW',
+            'chargeFrequency' => 'WEEKLY',
+            'country' => 'US',
+            'email' => 'iain.cambridge@example.org',
+            'id' => 'TC-PR_zzzyyxx',
+        ];
+
+        $subject = new ModelFactory();
+        $subject->buildChangedTransaction($transactionData);
+    }
+
+    public function testChangedTransactionInvalidProductId()
+    {
+        $this->expectException(MissingModelDataException::class);
+        $this->expectExceptionMessage("Expected key 'productId' to contain a string");
+
+        $transactionData = [
+            'createDate' => '2000-03-23',
+            'lastCharge' => '2001-05-23',
+            'nextCharge' => '2001-06-23',
+            'assignedEmail' => '',
+            'changedStatus' => 'CHANGED_STATUS_NEW',
+            'chargeFrequency' => 'WEEKLY',
+            'country' => 'US',
+            'email' => 'iain.cambridge@example.org',
+            'id' => 'TC-PR_zzzyyxx',
+            'payload' => null,
+            'productId' => null
+        ];
+
+        $subject = new ModelFactory();
+        $subject->buildChangedTransaction($transactionData);
+    }
+
+    public function testChangedTransactionInvalidProductName()
+    {
+        $this->expectException(MissingModelDataException::class);
+        $this->expectExceptionMessage("Expected key 'productName' to contain a string");
+
+        $transactionData = [
+            'createDate' => '2000-03-23',
+            'lastCharge' => '2001-05-23',
+            'nextCharge' => '2001-06-23',
+            'assignedEmail' => '',
+            'changedStatus' => 'CHANGED_STATUS_NEW',
+            'chargeFrequency' => 'WEEKLY',
+            'country' => 'US',
+            'email' => 'iain.cambridge@example.org',
+            'id' => 'TC-TR_zzzyyxx',
+            'payload' => null,
+            'productId' => 'TC-PR_dskfjsdl',
+            'productName' => null,
+        ];
+
+        $subject = new ModelFactory();
+        $subject->buildChangedTransaction($transactionData);
+    }
+
+    public function testChangedTransactionInvalidTransactionStatus()
+    {
+        $this->expectException(MissingModelDataException::class);
+        $this->expectExceptionMessage("Expected key 'transactionStatus' to contain a string");
+
+        $transactionData = [
+            'createDate' => '2000-03-23',
+            'lastCharge' => '2001-05-23',
+            'nextCharge' => '2001-06-23',
+            'assignedEmail' => '',
+            'changedStatus' => 'CHANGED_STATUS_NEW',
+            'chargeFrequency' => 'WEEKLY',
+            'country' => 'US',
+            'email' => 'iain.cambridge@example.org',
+            'id' => 'TC-PR_zzzyyxx',
+            'payload' => null,
+            'productId' => 'TC-PR_dskfjsdl',
+            'productName' => 'Product Name',
+            'transactionStatus' => null,
+        ];
+
+        $subject = new ModelFactory();
+        $subject->buildChangedTransaction($transactionData);
+    }
+
+    public function testChangedTransactionInvalidTransactionType()
+    {
+        $this->expectException(MissingModelDataException::class);
+        $this->expectExceptionMessage("Expected key 'transactionType' to contain a string");
+
+        $transactionData = [
+            'createDate' => '2000-03-23',
+            'lastCharge' => '2001-05-23',
+            'nextCharge' => '2001-06-23',
+            'assignedEmail' => '',
+            'changedStatus' => 'CHANGED_STATUS_NEW',
+            'chargeFrequency' => 'WEEKLY',
+            'country' => 'US',
+            'email' => 'iain.cambridge@example.org',
+            'id' => 'TC-PR_zzzyyxx',
+            'payload' => null,
+            'productId' => 'TC-PR_dskfjsdl',
+            'productName' => 'Product Name',
+            'transactionStatus' => 'SUBSCRIPTION_STATUS_ACTIVE',
+            'transactionType' => null
+        ];
+
+        $subject = new ModelFactory();
+        $subject->buildChangedTransaction($transactionData);
+    }
+
+    public function testChangedTransactionInvalidNetPrice()
+    {
+        $transactionData = [
+            'createDate' => '2000-03-23',
+            'lastCharge' => '2001-05-23',
+            'nextCharge' => '2001-06-23',
+            'assignedEmail' => '',
+            'changedStatus' => 'CHANGED_STATUS_NEW',
+            'chargeFrequency' => 'WEEKLY',
+            'country' => 'US',
+            'email' => 'iain.cambridge@example.org',
+            'id' => 'TC-PR_zzzyyxx',
+            'payload' => null,
+            'productId' => 'TC-PR_dskfjsdl',
+            'productName' => 'Product Name',
+            'transactionStatus' => 'SUBSCRIPTION_STATUS_ACTIVE',
+            'transactionType' => 'SUBSCRIPTION',
+        ];
+
+        $subject = new ModelFactory();
+        $actual = $subject->buildChangedTransaction($transactionData);
+
+        $this->assertInstanceOf(ChangedTransaction::class, $actual);
     }
 }

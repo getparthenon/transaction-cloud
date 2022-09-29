@@ -12,6 +12,7 @@ use Psr\Http\Message\StreamInterface;
 use TransactionCloud\Exception\InvalidResponseException;
 use TransactionCloud\Exception\MalformedResponseException;
 use TransactionCloud\Exception\MissingModelDataException;
+use TransactionCloud\Model\ChangedTransaction;
 use TransactionCloud\Model\ModelFactory;
 use TransactionCloud\Model\Refund;
 use TransactionCloud\Model\Transaction;
@@ -754,5 +755,55 @@ class TransactionCloudTest extends TestCase
 
         $subject = new TransactionCloud($client, $requestFactory, $streamFactory, $modelFactory);
         $subject->refundTransaction($id);
+    }
+
+
+
+    public function testFetchChangedTransaction()
+    {
+        $client = $this->createMock(ClientInterface::class);
+        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $request = $this->createMock(RequestInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+        $stream = $this->createMock(StreamInterface::class);
+        $modelFactory = $this->createMock(ModelFactory::class);
+        $streamFactory = $this->createMock(StreamFactoryInterface::class);
+        $changedTransaction = $this->createMock(ChangedTransaction::class);
+
+        $requestFactory->method('createRequest')->with("GET", sprintf("%s/v1/changed-transactions", TransactionCloud::PROD_API_HOST))->willReturn($request);
+        $client->method('sendRequest')->with($request)->willReturn($response);
+
+        $response->method('getStatusCode')->willReturn(200);
+        $response->method('getBody')->willReturn($stream);
+
+
+        $returnData =     [
+            [
+                'createDate' => '2000-03-23',
+                'lastCharge' => '2001-05-23',
+                'nextCharge' => '2001-06-23',
+                'assignedEmail' => '',
+                'changedStatus' => 'CHANGED_STATUS_NEW',
+                'chargeFrequency' => 'WEEKLY',
+                'country' => 'US',
+                'email' => 'iain.cambridge@example.org',
+                'id' => 'TC-PR_zzzyyxx',
+                'payload' => null,
+                'productId' => 'TC-PR_dskfjsdl',
+                'productName' => 'Product Name',
+                'transactionStatus' => 'SUBSCRIPTION_STATUS_ACTIVE',
+                'transactionType' => 'SUBSCRIPTION',
+            ]
+        ];
+
+        $stream->method('getContents')->willReturn(json_encode($returnData));
+
+        $modelFactory->expects($this->once())->method('buildChangedTransaction')->with($returnData[0])->willReturn($changedTransaction);
+
+        $subject = new TransactionCloud($client, $requestFactory, $streamFactory, $modelFactory);
+        $actual = $subject->fetchChangedTransactions();
+
+        $this->assertCount(1, $actual);
+        $this->assertEquals($changedTransaction, $actual[0]);
     }
 }

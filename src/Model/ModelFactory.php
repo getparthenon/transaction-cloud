@@ -182,4 +182,84 @@ class ModelFactory
             $refundData['country']
         );
     }
+
+    /**
+     * @param array $transaction
+     * @return Transaction
+     * @throws MissingModelDataException
+     */
+    public function buildChangedTransaction(array $transaction): ChangedTransaction
+    {
+        $createDate = \DateTime::createFromFormat("Y-m-d", $transaction['createDate']);
+        if ($createDate === false) {
+            throw new MissingModelDataException("Expected key 'createDate' to contain date format");
+        }
+
+        $lastCharge = \DateTime::createFromFormat("Y-m-d", $transaction['lastCharge']);
+        if ($lastCharge === false) {
+            throw new MissingModelDataException("Expected key 'lastCharge' to contain date format");
+        }
+
+        $nextCharge = \DateTime::createFromFormat("Y-m-d", $transaction['nextCharge']);
+        if ($nextCharge === false) {
+            throw new MissingModelDataException("Expected key 'nextCharge' to contain date format");
+        }
+
+        if (!isset($transaction['assignedEmail'])) {
+            throw new MissingModelDataException("Expected key 'assignedEmail' to contain a string");
+        }
+
+        if (!isset($transaction['changedStatus'])) {
+            throw new MissingModelDataException("Expected key 'changedStatus' to contain a string");
+        }
+
+        if (!isset($transaction['chargeFrequency'])) {
+            throw new MissingModelDataException("Expected key 'chargeFrequency' to contain a string");
+        }
+
+        if (!isset($transaction['country'])) {
+            throw new MissingModelDataException("Expected key 'country' to contain a string");
+        }
+
+        if (!isset($transaction['email'])) {
+            throw new MissingModelDataException("Expected key 'email' to contain a string");
+        }
+
+        if (!isset($transaction['id'])) {
+            throw new MissingModelDataException("Expected key 'id' to contain a string");
+        }
+
+        if (!array_key_exists('payload', $transaction)) {
+            throw new MissingModelDataException("Expected key 'payload' to contain a string or null");
+        }
+        if (!isset($transaction['productId'])) {
+            throw new MissingModelDataException("Expected key 'productId' to contain a string");
+        }
+        if (!isset($transaction['productName'])) {
+            throw new MissingModelDataException("Expected key 'productName' to contain a string");
+        }
+        if (!isset($transaction['transactionStatus'])) {
+            throw new MissingModelDataException("Expected key 'transactionStatus' to contain a string");
+        }
+        if (!isset($transaction['transactionType'])) {
+            throw new MissingModelDataException("Expected key 'transactionType' to contain a string");
+        }
+
+        return new ChangedTransaction(
+            $transaction['assignedEmail'],
+            $transaction['changedStatus'],
+            $transaction['chargeFrequency'],
+            $transaction['country'],
+            $createDate,
+            $transaction['email'],
+            $transaction['id'],
+            $lastCharge,
+            $nextCharge,
+            $transaction['payload'],
+            $transaction['productId'],
+            $transaction['productName'],
+            $transaction['transactionStatus'],
+            $transaction['transactionType'],
+        );
+    }
 }
