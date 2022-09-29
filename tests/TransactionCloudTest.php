@@ -13,6 +13,7 @@ use TransactionCloud\Exception\InvalidResponseException;
 use TransactionCloud\Exception\MalformedResponseException;
 use TransactionCloud\Exception\MissingModelDataException;
 use TransactionCloud\Model\ModelFactory;
+use TransactionCloud\Model\Refund;
 use TransactionCloud\Model\Transaction;
 use TransactionCloud\TransactionCloud;
 
@@ -610,5 +611,52 @@ class TransactionCloudTest extends TestCase
         $subject = new TransactionCloud($client, $requestFactory, $streamFactory, $modelFactory);
 
         $this->assertFalse($subject->cancelSubscription($id));
+    }
+
+    public function testRefundTransaction()
+    {
+        $client = $this->createMock(ClientInterface::class);
+        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $request = $this->createMock(RequestInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+        $stream = $this->createMock(StreamInterface::class);
+        $modelFactory = $this->createMock(ModelFactory::class);
+        $streamFactory = $this->createMock(StreamFactoryInterface::class);
+        $refund = $this->createMock(Refund::class);
+        $id = "TC-TR_040405";
+
+        $requestFactory->method('createRequest')->with("POST", sprintf("%s/v1/refund-transaction/%s", TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
+        $client->method('sendRequest')->with($request)->willReturn($response);
+
+        $response->method('getStatusCode')->willReturn(200);
+        $response->method('getBody')->willReturn($stream);
+
+
+        $returnData =     [
+            'TCFee' => 0.72,
+            'amountTotal' => 4.36,
+            'currency' => 'USD',
+            'externalId' => "5559995555",
+            "hashId" => "TC-BA_YYYZZZX",
+            "id" => "4/2/2022",
+            "incomeCurrency" => "USD",
+            "invoiceLink" => "https://api.transaction.cloud/invoice/TC-BA_YYYZZZX",
+            "paymentProvider" => "BLUESNAP",
+            "refundable" => false,
+            "taxAmount" => 0.36,
+            "timestamp" => 1643974626000,
+            "transactionFee" => 0.0,
+            "vendorIncome" => 3.28,
+            "country" => "US",
+        ];
+
+        $stream->method('getContents')->willReturn(json_encode($returnData));
+
+        $modelFactory->method('buildRefund')->willReturn($refund);
+
+        $subject = new TransactionCloud($client, $requestFactory, $streamFactory, $modelFactory);
+        $actual = $subject->refundTransaction($id);
+
+        $this->assertSame($refund, $actual);
     }
 }
