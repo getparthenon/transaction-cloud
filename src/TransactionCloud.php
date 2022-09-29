@@ -138,9 +138,9 @@ final class TransactionCloud
      * @throws MalformedResponseException
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function getTransactionById(string $id): Transaction
+    public function getTransactionById(string $transactionId): Transaction
     {
-        $request = $this->requestFactory->createRequest('GET', sprintf('%s/v1/transaction/%s', $this->baseUrl, $id));
+        $request = $this->requestFactory->createRequest('GET', sprintf('%s/v1/transaction/%s', $this->baseUrl, $transactionId));
         $response = $this->client->sendRequest($request);
 
         if (200 !== $response->getStatusCode()) {
@@ -160,9 +160,9 @@ final class TransactionCloud
         }
     }
 
-    public function assignTransactionToEmail(string $id, string $email): bool
+    public function assignTransactionToEmail(string $transactionId, string $email): bool
     {
-        $request = $this->requestFactory->createRequest('POST', sprintf('%s/v1/transaction/%s', $this->baseUrl, $id));
+        $request = $this->requestFactory->createRequest('POST', sprintf('%s/v1/transaction/%s', $this->baseUrl, $transactionId));
         $request->withBody($this->streamFactory->createStream(json_encode(['assignEmail' => $email])));
         $response = $this->client->sendRequest($request);
 
@@ -173,9 +173,9 @@ final class TransactionCloud
         return true;
     }
 
-    public function cancelSubscription(string $id): bool
+    public function cancelSubscription(string $transactionId): bool
     {
-        $request = $this->requestFactory->createRequest('POST', sprintf('%s/v1/cancel-subscription/%s', $this->baseUrl, $id));
+        $request = $this->requestFactory->createRequest('POST', sprintf('%s/v1/cancel-subscription/%s', $this->baseUrl, $transactionId));
         $response = $this->client->sendRequest($request);
 
         if (200 !== $response->getStatusCode()) {
@@ -235,9 +235,9 @@ final class TransactionCloud
         return $output;
     }
 
-    public function markTransactionAsProcessed(string $id): bool
+    public function markTransactionAsProcessed(string $transactionId): bool
     {
-        $request = $this->requestFactory->createRequest('POST', sprintf('%s/v1/changed-transactions/%s', $this->baseUrl, $id));
+        $request = $this->requestFactory->createRequest('POST', sprintf('%s/v1/changed-transactions/%s', $this->baseUrl, $transactionId));
         $response = $this->client->sendRequest($request);
 
         if (200 !== $response->getStatusCode()) {
@@ -247,9 +247,9 @@ final class TransactionCloud
         return true;
     }
 
-    public function customizeProduct(string $id, Product $product): ProductData
+    public function customizeProduct(string $productId, Product $product): ProductData
     {
-        $request = $this->requestFactory->createRequest('POST', sprintf('%s/v1/transaction/%s', $this->baseUrl, $id));
+        $request = $this->requestFactory->createRequest('POST', sprintf('%s/v1/transaction/%s', $this->baseUrl, $productId));
         $request->withBody($this->streamFactory->createStream(json_encode($product->getApiPayload())));
         $response = $this->client->sendRequest($request);
 
