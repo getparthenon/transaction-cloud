@@ -220,4 +220,15 @@ final class TransactionCloud implements ClientInterface
 
         return $output;
     }
+
+    public function markTransactionAsProcessed(string $id): bool
+    {
+        $request = $this->requestFactory->createRequest("POST", sprintf("%s/v1/changed-transactions/%s", $this->baseUrl, $id));
+        $response = $this->client->sendRequest($request);
+
+        if ($response->getStatusCode() !== 200) {
+            return false;
+        }
+        return true;
+    }
 }

@@ -708,8 +708,6 @@ class TransactionCloudTest extends TestCase
         $subject->refundTransaction($id);
     }
 
-
-
     public function testRefundTransactionMalformResponse()
     {
         $this->expectException(MalformedResponseException::class);
@@ -757,8 +755,6 @@ class TransactionCloudTest extends TestCase
         $subject->refundTransaction($id);
     }
 
-
-
     public function testFetchChangedTransaction()
     {
         $client = $this->createMock(ClientInterface::class);
@@ -805,5 +801,49 @@ class TransactionCloudTest extends TestCase
 
         $this->assertCount(1, $actual);
         $this->assertEquals($changedTransaction, $actual[0]);
+    }
+
+    public function testMarkTransactionAsProcessSuccess()
+    {
+        $client = $this->createMock(ClientInterface::class);
+        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $request = $this->createMock(RequestInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+        $stream = $this->createMock(StreamInterface::class);
+        $modelFactory = $this->createMock(ModelFactory::class);
+        $streamFactory = $this->createMock(StreamFactoryInterface::class);
+        $email = "iain.cambridge@example.org";
+        $id = "TC-TR_023003";
+
+        $requestFactory->method('createRequest')->with("POST", sprintf("%s/v1/changed-transactions/%s", TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
+        $client->method('sendRequest')->with($request)->willReturn($response);
+
+        $response->method('getStatusCode')->willReturn(200);
+
+        $subject = new TransactionCloud($client, $requestFactory, $streamFactory, $modelFactory);
+
+        $this->assertTrue($subject->markTransactionAsProcessed($id));
+    }
+
+    public function testMarkTransactionAsProcessFailed()
+    {
+        $client = $this->createMock(ClientInterface::class);
+        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $request = $this->createMock(RequestInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+        $stream = $this->createMock(StreamInterface::class);
+        $modelFactory = $this->createMock(ModelFactory::class);
+        $streamFactory = $this->createMock(StreamFactoryInterface::class);
+        $email = "iain.cambridge@example.org";
+        $id = "TC-TR_023003";
+
+        $requestFactory->method('createRequest')->with("POST", sprintf("%s/v1/changed-transactions/%s", TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
+        $client->method('sendRequest')->with($request)->willReturn($response);
+
+        $response->method('getStatusCode')->willReturn(401);
+
+        $subject = new TransactionCloud($client, $requestFactory, $streamFactory, $modelFactory);
+
+        $this->assertFalse($subject->markTransactionAsProcessed($id));
     }
 }
