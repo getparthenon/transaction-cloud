@@ -2,6 +2,7 @@
 
 namespace TransactionCloud\Model;
 
+use Brick\Money\Currency;
 use Brick\Money\Money;
 
 class Refund
@@ -10,7 +11,7 @@ class Refund
 
     private Money $amountTotal;
 
-    private string $currency;
+    private Currency $currency;
 
     private string $externalId;
 
@@ -18,7 +19,7 @@ class Refund
 
     private string $id;
 
-    private string $incomeCurrency;
+    private Currency $incomeCurrency;
 
     private string $invoiceLink;
 
@@ -39,11 +40,11 @@ class Refund
     public function __construct(
         Money $transactionCloudFee,
         Money $amountTotal,
-        string $currency,
+        Currency $currency,
         string $externalId,
         string $hashId,
         string $id,
-        string $incomeCurrency,
+        Currency $incomeCurrency,
         string $invoiceLink,
         string $paymentProvider,
         bool $refundable,
@@ -121,7 +122,7 @@ class Refund
     /**
      * @return string
      */
-    public function getIncomeCurrency(): string
+    public function getIncomeCurrency(): Currency
     {
         return $this->incomeCurrency;
     }
