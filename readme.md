@@ -8,7 +8,7 @@ This is a library to provide integration to the [Transaction.cloud](https://host
 ## Getting Started
 
 ```sh
-composer require parthenon/transaction-cloud
+composer require parthenon/transaction-cloud symfony/http-client nyholm/psr7
 ```
 
 ```php
@@ -142,7 +142,7 @@ Yes. This library is completely open source and is free to use without limitatio
 
 ### What support can I get for this?
 
-You can create an issue in this repository and I'll be able to provide support.
+You can create an issue in this repository and we'll be able to provide support.
 
 ### Is this an offical SDK?
 
