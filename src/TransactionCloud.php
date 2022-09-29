@@ -14,6 +14,8 @@ use TransactionCloud\Exception\InvalidResponseException;
 use TransactionCloud\Exception\MalformedResponseException;
 use TransactionCloud\Exception\MissingModelDataException;
 use TransactionCloud\Model\ModelFactory;
+use TransactionCloud\Model\Product;
+use TransactionCloud\Model\ProductData;
 use TransactionCloud\Model\Refund;
 use TransactionCloud\Model\Transaction;
 
@@ -230,5 +232,29 @@ final class TransactionCloud implements ClientInterface
             return false;
         }
         return true;
+    }
+
+    public function customizeProduct(string $id, Product $product): ProductData
+    {
+
+        $request = $this->requestFactory->createRequest("POST", sprintf("%s/v1/transaction/%s", $this->baseUrl, $id));
+        $request->withBody($this->streamFactory->createStream(json_encode($product->getApiPayload())));
+        $response = $this->client->sendRequest($request);
+
+        if ($response->getStatusCode() !== 200) {
+            throw new InvalidResponseException($response);
+        }
+
+        $jsonData = json_decode($response->getBody()->getContents(), true);
+
+        if ($jsonData === null) {
+            throw new MalformedResponseException($response, "Expected return body to contain valid json");
+        }
+
+        try {
+            return $this->modelFactory->buildProductData($jsonData);
+        } catch (MissingModelDataException $e) {
+            throw new MalformedResponseException($response, $e->getMessage(), $e->getCode(), $e);
+        }
     }
 }

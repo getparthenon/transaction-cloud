@@ -262,4 +262,20 @@ class ModelFactory
             $transaction['transactionType'],
         );
     }
+
+    public function buildProductData(array $productData): ProductData
+    {
+        if (!isset($productData['link'])) {
+            throw new MissingModelDataException("Expected key 'link' to contain a string");
+        }
+
+        if (!isset($productData['customProductId'])) {
+            throw new MissingModelDataException("Expected key 'customProductId' to contain a string");
+        }
+        
+        return new ProductData(
+            $productData['link'],
+            $productData['customProductId'],
+        );
+    }
 }

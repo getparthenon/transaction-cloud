@@ -14,6 +14,8 @@ use TransactionCloud\Exception\MalformedResponseException;
 use TransactionCloud\Exception\MissingModelDataException;
 use TransactionCloud\Model\ChangedTransaction;
 use TransactionCloud\Model\ModelFactory;
+use TransactionCloud\Model\Product;
+use TransactionCloud\Model\ProductData;
 use TransactionCloud\Model\Refund;
 use TransactionCloud\Model\Transaction;
 use TransactionCloud\TransactionCloud;
@@ -838,5 +840,48 @@ class TransactionCloudTest extends TestCase
         $subject = new TransactionCloud($client, $requestFactory, $streamFactory, $modelFactory);
 
         $this->assertFalse($subject->markTransactionAsProcessed($id));
+    }
+
+    public function testCustomizeProduct()
+    {
+        $client = $this->createMock(ClientInterface::class);
+        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $request = $this->createMock(RequestInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+        $requestStream = $this->createMock(StreamInterface::class);
+        $responseStream = $this->createMock(StreamInterface::class);
+        $streamFactory = $this->createMock(StreamFactoryInterface::class);
+        $product = $this->createMock(Product::class);
+        $email = "iain.cambridge@example.org";
+        $id = "TC-TR_023003";
+
+        $payload = [
+            'prices' => [
+                ['currency' => 'usd', 'value' => 500.00],
+            ],
+            'description' => 'description',
+            'payload' => '',
+            'transactionIdToMigrate' => "TC-TR_X1000"
+        ];
+
+        $product->method('getApiPayload')->willReturn($payload);
+
+        $requestFactory->method('createRequest')->with("POST", sprintf("%s/v1/transaction/%s", TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
+        $client->method('sendRequest')->with($request)->willReturn($response);
+
+        $response->method('getStatusCode')->willReturn(200);
+        $response->method('getBody')->willReturn($responseStream);
+
+        $streamFactory->method('createStream')->with(json_encode($payload))->willReturn($requestStream);
+        $request->expects($this->once())->method("withBody")->with($requestStream);
+
+        $responsePayload = ['link' => "https://hosted.transaction.cloud/payment/product/PC_XXX", 'customProductId' => 'PC_z4wvoA0LjMGVLCBxr0UMzpk+KzRbD82BAr0zuLDNl4lr4MOCxz3YM4XDe6eHswLDusAtyO5Z3qrZ5rdraC5e_KLBVhS_X7znubZuKaLlD8pkRoDtEWd4'];
+        $responseStream->method('getContents')->willReturn(json_encode($responsePayload));
+
+        $subject = new TransactionCloud($client, $requestFactory, $streamFactory);
+
+
+        $this->assertInstanceOf(ProductData::class, $subject->customizeProduct($id, $product));
+
     }
 }

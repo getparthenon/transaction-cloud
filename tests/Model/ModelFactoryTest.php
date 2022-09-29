@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use TransactionCloud\Exception\MissingModelDataException;
 use TransactionCloud\Model\ChangedTransaction;
 use TransactionCloud\Model\ModelFactory;
+use TransactionCloud\Model\ProductData;
 use TransactionCloud\Model\Refund;
 use TransactionCloud\Model\Transaction;
 
@@ -1036,5 +1037,48 @@ class ModelFactoryTest extends TestCase
         $actual = $subject->buildChangedTransaction($transactionData);
 
         $this->assertInstanceOf(ChangedTransaction::class, $actual);
+    }
+
+
+
+    public function testProductDataLinkMissing()
+    {
+        $this->expectException(MissingModelDataException::class);
+        $this->expectExceptionMessage("Expected key 'link' to contain a string");
+
+        $transactionData = [
+            'link' => null,
+            'customProductId' => "PC_z4wvoA0LjMGVLCBxr0UMzpk+KzRbD82BAr0zuLDNl4lr4MOCxz3YM4XDe6eHswLDusAtyO5Z3qrZ5rdraC5e_KLBVhS_X7znubZuKaLlD8pkRoDtEWd4",
+        ];
+
+        $subject = new ModelFactory();
+        $subject->buildProductData($transactionData);
+    }
+
+    public function testCustomProductIdMissing()
+    {
+        $this->expectException(MissingModelDataException::class);
+        $this->expectExceptionMessage("Expected key 'customProductId' to contain a string");
+
+        $transactionData = [
+            'link' => "http://example.org",
+            'customProductId' => null,
+        ];
+
+        $subject = new ModelFactory();
+        $subject->buildProductData($transactionData);
+    }
+
+    public function testValidProductData()
+    {
+        $transactionData = [
+            'link' => "http://example.org",
+            'customProductId' => "PC_z4wvoA0LjMGVLCBxr0UMzpk+KzRbD82BAr0zuLDNl4lr4MOCxz3YM4XDe6eHswLDusAtyO5Z3qrZ5rdraC5e_KLBVhS_X7znubZuKaLlD8pkRoDtEWd4",
+        ];
+
+        $subject = new ModelFactory();
+        $actual = $subject->buildProductData($transactionData);
+
+        $this->assertInstanceOf(ProductData::class, $actual);
     }
 }
