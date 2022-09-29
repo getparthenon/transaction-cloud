@@ -45,8 +45,89 @@ $url = $transactionCloud->getUrlToAdmin();
 $transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "api_key_password");
 $transactions = $transactionCloud->getTransactionsByEmail("iain.cambridge@example.org");
 
-/** $transaction \TransactionCloud\Model\Transaction **/
+/** @var $transaction \TransactionCloud\Model\Transaction **/
 foreach ($transactions as $transaction) {
     // Do something with transaction
 }
+```
+
+## Retrieve Transaction By Transaction ID
+
+[API Docs](https://app.transaction.cloud/api-docs/#retrieve-transaction-by-transaction-id)
+
+```php
+$transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "api_key_password");
+$transaction = $transactionCloud->getTransactionById("TC-TR_xxyyxxx");
+
+// do something with transaction.
+```
+
+## Assign Email Address By Transaction Id
+
+[API Docs](https://app.transaction.cloud/api-docs/#assign-email-address-by-transaction-id)
+
+```php
+$transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "api_key_password");
+$success = $transactionCloud->assignTransactionToEmail("TC-TR_xxyyxxx", "new.iain@example.org");
+```
+
+## Cancel Subscription
+
+[API Docs](https://app.transaction.cloud/api-docs/#cancel-subscription)
+
+```php
+$transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "api_key_password");
+$success = $transactionCloud->cancelSubscription("TC-TR_xxyyxxx");
+```
+
+## Refund Transaction
+
+
+[API Docs](https://app.transaction.cloud/api-docs/#refund-transaction)
+
+```php
+$transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "api_key_password");
+$refundData = $transactionCloud->refundTransaction("TC-TR_xxyyxxx");
+```
+
+## Retrieve Transactions With Changed Status
+
+[API Docs](https://app.transaction.cloud/api-docs/#retrieve-transactions-with-changed-status)
+
+```php
+$transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "api_key_password");
+$transactions = $transactionCloud->fetchChangedTransactions();
+
+/** @var $transaction \TransactionCloud\Model\ChangedTransaction **/
+foreach ($transactions as $transaction) {
+    // Do something with transaction
+}
+```
+
+## Marking Transaction As Processed
+
+[API Docs](https://app.transaction.cloud/api-docs/#marking-transactions-as-processed)
+
+```php
+$transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "api_key_password");
+$success = $transactionCloud->markTransactionAsProcessed("TC-TR_xxyyxxx");
+```
+
+## Customise Product On Demand
+
+[API Docs](https://app.transaction.cloud/api-docs/#customize-product-on-demand)
+
+```php
+$price = \Brick\Money::of("100", "USD");
+
+$product = new \TransactionCloud\Model\Product();
+$product->setPrices([$price]);
+$product->setDescription("Custom product");
+$product->setPayload("Payload");
+$product->settTansactionIdToMigrate("TC-PR_kdljfdskl");
+
+$transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "api_key_password");
+$productData = $transacloudCloud->customizeProduct("TC-PR_kdjfde", $product);
+
+// $productData instanceof \TransactionCloud\Model\ProductData
 ```
