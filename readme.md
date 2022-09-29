@@ -19,6 +19,8 @@ $transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "a
 $transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "api_key_password", true);
 ```
 
+## Examples
+
 ### Get Url To Manage Transactions
 
 [API Docs](https://app.transaction.cloud/api-docs/#retrieve-url-to-manage-transactions)
@@ -37,7 +39,7 @@ $transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "a
 $url = $transactionCloud->getUrlToAdmin();
 ```
 
-## Retrieve Transactions By Email
+### Retrieve Transactions By Email
 
 [API Docs](https://app.transaction.cloud/api-docs/#retrieve-transactions-by-email)
 
@@ -51,7 +53,7 @@ foreach ($transactions as $transaction) {
 }
 ```
 
-## Retrieve Transaction By Transaction ID
+### Retrieve Transaction By Transaction ID
 
 [API Docs](https://app.transaction.cloud/api-docs/#retrieve-transaction-by-transaction-id)
 
@@ -62,7 +64,7 @@ $transaction = $transactionCloud->getTransactionById("TC-TR_xxyyxxx");
 // do something with transaction.
 ```
 
-## Assign Email Address By Transaction Id
+### Assign Email Address By Transaction Id
 
 [API Docs](https://app.transaction.cloud/api-docs/#assign-email-address-by-transaction-id)
 
@@ -71,7 +73,7 @@ $transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "a
 $success = $transactionCloud->assignTransactionToEmail("TC-TR_xxyyxxx", "new.iain@example.org");
 ```
 
-## Cancel Subscription
+### Cancel Subscription
 
 [API Docs](https://app.transaction.cloud/api-docs/#cancel-subscription)
 
@@ -80,7 +82,7 @@ $transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "a
 $success = $transactionCloud->cancelSubscription("TC-TR_xxyyxxx");
 ```
 
-## Refund Transaction
+### Refund Transaction
 
 
 [API Docs](https://app.transaction.cloud/api-docs/#refund-transaction)
@@ -90,7 +92,7 @@ $transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "a
 $refundData = $transactionCloud->refundTransaction("TC-TR_xxyyxxx");
 ```
 
-## Retrieve Transactions With Changed Status
+### Retrieve Transactions With Changed Status
 
 [API Docs](https://app.transaction.cloud/api-docs/#retrieve-transactions-with-changed-status)
 
@@ -104,7 +106,7 @@ foreach ($transactions as $transaction) {
 }
 ```
 
-## Marking Transaction As Processed
+### Marking Transaction As Processed
 
 [API Docs](https://app.transaction.cloud/api-docs/#marking-transactions-as-processed)
 
@@ -113,7 +115,7 @@ $transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "a
 $success = $transactionCloud->markTransactionAsProcessed("TC-TR_xxyyxxx");
 ```
 
-## Customise Product On Demand
+### Customise Product On Demand
 
 [API Docs](https://app.transaction.cloud/api-docs/#customize-product-on-demand)
 
@@ -131,3 +133,25 @@ $productData = $transacloudCloud->customizeProduct("TC-PR_kdjfde", $product);
 
 // $productData instanceof \TransactionCloud\Model\ProductData
 ```
+
+## FAQ
+
+### Is this free to use?
+
+Yes. This library is completely open source and is free to use without limitations.
+
+### What support can I get for this?
+
+You can create an issue in this repository and I'll be able to provide support.
+
+### Is this an offical SDK?
+
+No, however, we do have a relationship with Transaction.Cloud.
+
+### Why should I use Transaction.Cloud over Paddle?
+
+It's cheaper. 4.9% vs 5%. Not much but it all adds up. 
+
+They're also very responsive in their support matters. We get answers within hours.
+
+[Click here to check them out](https://hosted.transaction.cloud/ref/6HBUF3G5)
