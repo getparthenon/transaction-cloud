@@ -576,10 +576,8 @@ class TransactionCloudTest extends TestCase
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
         $request = $this->createMock(RequestInterface::class);
         $response = $this->createMock(ResponseInterface::class);
-        $stream = $this->createMock(StreamInterface::class);
         $modelFactory = $this->createMock(ModelFactory::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $email = "iain.cambridge@example.org";
         $id = "TC-TR_023003";
 
         $requestFactory->method('createRequest')->with("POST", sprintf("%s/v1/cancel-subscription/%s", TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
@@ -719,7 +717,6 @@ class TransactionCloudTest extends TestCase
         $stream = $this->createMock(StreamInterface::class);
         $modelFactory = $this->createMock(ModelFactory::class);
         $streamFactory = $this->createMock(StreamFactoryInterface::class);
-        $refund = $this->createMock(Refund::class);
         $id = "TC-TR_040405";
 
         $requestFactory->method('createRequest')->with("POST", sprintf("%s/v1/refund-transaction/%s", TransactionCloud::PROD_API_HOST, $id))->willReturn($request);
