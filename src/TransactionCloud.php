@@ -276,6 +276,6 @@ final class TransactionCloud
 
     public function getPaymentUrlForProduct(string $productId): string
     {
-        return sprintf("%s/payment/product/%s", $this->hostedBaseUrl, $productId);
+        return sprintf('%s/payment/product/%s', $this->hostedBaseUrl, $productId);
     }
 }
