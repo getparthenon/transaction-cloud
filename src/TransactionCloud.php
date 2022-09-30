@@ -31,10 +31,10 @@ use TransactionCloud\Model\Transaction;
 final class TransactionCloud
 {
     public const VERSION = 0.1;
-    private const PROD_API_HOST = 'https://api.transction.cloud';
-    private const SANDBOX_API_HOST = 'https://sandbox-api.transaction.cloud';
-    private const PROD_HOSTED_HOST = 'https://hosted.transaction.cloud';
-    private const SANDBOX_HOSTED_HOST = 'https://sandbox-hosted.transaction.cloud';
+    public const PROD_API_HOST = 'https://api.transction.cloud';
+    public const SANDBOX_API_HOST = 'https://sandbox-api.transaction.cloud';
+    public const PROD_HOSTED_HOST = 'https://hosted.transaction.cloud';
+    public const SANDBOX_HOSTED_HOST = 'https://sandbox-hosted.transaction.cloud';
 
     private PsrClientInterface $client;
     private PsrRequestFactoryInterface $requestFactory;
@@ -43,7 +43,7 @@ final class TransactionCloud
     private string $apiBaseUrl;
     private string $hostedBaseUrl;
 
-    public function __construct(?PsrClientInterface $client = null, ?PsrRequestFactoryInterface $requestFactory = null, ?StreamFactoryInterface $streamFactory, ?ModelFactory $factory = null, bool $sandbox = true)
+    public function __construct(?PsrClientInterface $client = null, ?PsrRequestFactoryInterface $requestFactory = null, ?StreamFactoryInterface $streamFactory, ?ModelFactory $factory = null, bool $sandbox = false)
     {
         $this->client = $client ?? Psr18ClientDiscovery::find();
         $this->requestFactory = $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory();
