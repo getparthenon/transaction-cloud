@@ -134,6 +134,14 @@ $productData = $transacloudCloud->customizeProduct("TC-PR_kdjfde", $product);
 // $productData instanceof \TransactionCloud\Model\ProductData
 ```
 
+### Get Payment Url For Product
+
+```php
+$transactionCloud = new \TransactionCloud\TransactionCloud::create("api_key", "api_key_password");
+
+$url = $transactionCloud->getPaymentUrlForProduct("TC-TR_3jsd94");
+```
+
 ## FAQ
 
 ### Is this free to use?
