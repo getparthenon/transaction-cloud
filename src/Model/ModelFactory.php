@@ -24,12 +24,12 @@ class ModelFactory
      */
     public function buildTransaction(array $transaction): Transaction
     {
-        $createDate = \DateTime::createFromFormat('Y-m-d', $transaction['createDate']);
+        $createDate = \DateTime::createFromFormat(\DATE_RFC3339_EXTENDED, $transaction['createDate']);
         if (false === $createDate) {
             throw new MissingModelDataException("Expected key 'createDate' to contain date format");
         }
 
-        $lastCharge = \DateTime::createFromFormat('Y-m-d', $transaction['lastCharge']);
+        $lastCharge = \DateTime::createFromFormat(\DATE_RFC3339_EXTENDED, $transaction['lastCharge']);
         if (false === $lastCharge) {
             throw new MissingModelDataException("Expected key 'lastCharge' to contain date format");
         }
@@ -196,17 +196,17 @@ class ModelFactory
      */
     public function buildChangedTransaction(array $transaction): ChangedTransaction
     {
-        $createDate = \DateTime::createFromFormat('Y-m-d', $transaction['createDate']);
+        $createDate = \DateTime::createFromFormat(\DATE_RFC3339_EXTENDED, $transaction['createDate']);
         if (false === $createDate) {
             throw new MissingModelDataException("Expected key 'createDate' to contain date format");
         }
 
-        $lastCharge = \DateTime::createFromFormat('Y-m-d', $transaction['lastCharge']);
+        $lastCharge = \DateTime::createFromFormat(\DATE_RFC3339_EXTENDED, $transaction['lastCharge']);
         if (false === $lastCharge) {
             throw new MissingModelDataException("Expected key 'lastCharge' to contain date format");
         }
 
-        $nextCharge = \DateTime::createFromFormat('Y-m-d', $transaction['nextCharge']);
+        $nextCharge = \DateTime::createFromFormat(\DATE_RFC3339_EXTENDED, $transaction['nextCharge']);
         if (false === $nextCharge) {
             throw new MissingModelDataException("Expected key 'nextCharge' to contain date format");
         }

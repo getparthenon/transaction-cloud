@@ -41,7 +41,7 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'lastCharge' to contain date format");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
             'lastCharge' => '',
         ];
 
@@ -55,8 +55,8 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'assignedEmail' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => null,
         ];
 
@@ -70,8 +70,8 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'chargeFrequency' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'chargeFrequency' => null,
         ];
@@ -86,8 +86,8 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'country' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'chargeFrequency' => 'WEEKLY',
             'country' => null,
@@ -103,8 +103,8 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'email' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'chargeFrequency' => 'WEEKLY',
             'country' => 'US',
@@ -121,8 +121,8 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'id' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'chargeFrequency' => 'WEEKLY',
             'country' => 'US',
@@ -140,8 +140,8 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'payload' to contain a string or null");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'chargeFrequency' => 'WEEKLY',
             'country' => 'US',
@@ -159,8 +159,8 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'productId' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'chargeFrequency' => 'WEEKLY',
             'country' => 'US',
@@ -180,8 +180,8 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'productName' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'chargeFrequency' => 'WEEKLY',
             'country' => 'US',
@@ -202,8 +202,8 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'transactionStatus' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'chargeFrequency' => 'WEEKLY',
             'country' => 'US',
@@ -225,8 +225,8 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'transactionType' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'chargeFrequency' => 'WEEKLY',
             'country' => 'US',
@@ -249,8 +249,8 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'netPrice' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'chargeFrequency' => 'WEEKLY',
             'country' => 'US',
@@ -274,8 +274,8 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'tax' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'chargeFrequency' => 'WEEKLY',
             'country' => 'US',
@@ -301,8 +301,8 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'currency' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'chargeFrequency' => 'WEEKLY',
             'country' => 'US',
@@ -325,8 +325,8 @@ class ModelFactoryTest extends TestCase
     public function testValid()
     {
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'chargeFrequency' => 'WEEKLY',
             'country' => 'US',
@@ -784,7 +784,7 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'lastCharge' to contain date format");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
             'lastCharge' => '',
         ];
 
@@ -798,8 +798,8 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'nextCharge' to contain date format");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2000-05-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
             'nextCharge' => '',
         ];
 
@@ -813,9 +813,9 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'assignedEmail' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
-            'nextCharge' => '2001-06-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
+            'nextCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => null,
         ];
 
@@ -829,9 +829,9 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'changedStatus' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
-            'nextCharge' => '2001-06-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
+            'nextCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'changedStatus' => null,
         ];
@@ -846,9 +846,9 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'chargeFrequency' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
-            'nextCharge' => '2001-06-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
+            'nextCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'changedStatus' => 'CHANGED_STATUS_NEW',
             'chargeFrequency' => null,
@@ -864,9 +864,9 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'country' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
-            'nextCharge' => '2001-06-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
+            'nextCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'changedStatus' => 'CHANGED_STATUS_NEW',
             'chargeFrequency' => 'WEEKLY',
@@ -883,9 +883,9 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'email' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
-            'nextCharge' => '2001-06-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
+            'nextCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'changedStatus' => 'CHANGED_STATUS_NEW',
             'chargeFrequency' => 'WEEKLY',
@@ -903,9 +903,9 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'id' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
-            'nextCharge' => '2001-06-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
+            'nextCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'changedStatus' => 'CHANGED_STATUS_NEW',
             'chargeFrequency' => 'WEEKLY',
@@ -924,9 +924,9 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'payload' to contain a string or null");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
-            'nextCharge' => '2001-06-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
+            'nextCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'changedStatus' => 'CHANGED_STATUS_NEW',
             'chargeFrequency' => 'WEEKLY',
@@ -945,9 +945,9 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'productId' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
-            'nextCharge' => '2001-06-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
+            'nextCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'changedStatus' => 'CHANGED_STATUS_NEW',
             'chargeFrequency' => 'WEEKLY',
@@ -968,9 +968,9 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'productName' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
-            'nextCharge' => '2001-06-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
+            'nextCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'changedStatus' => 'CHANGED_STATUS_NEW',
             'chargeFrequency' => 'WEEKLY',
@@ -992,9 +992,9 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'transactionStatus' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
-            'nextCharge' => '2001-06-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
+            'nextCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'changedStatus' => 'CHANGED_STATUS_NEW',
             'chargeFrequency' => 'WEEKLY',
@@ -1017,9 +1017,9 @@ class ModelFactoryTest extends TestCase
         $this->expectExceptionMessage("Expected key 'transactionType' to contain a string");
 
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
-            'nextCharge' => '2001-06-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
+            'nextCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'changedStatus' => 'CHANGED_STATUS_NEW',
             'chargeFrequency' => 'WEEKLY',
@@ -1040,9 +1040,9 @@ class ModelFactoryTest extends TestCase
     public function testChangedTransactionInvalidNetPrice()
     {
         $transactionData = [
-            'createDate' => '2000-03-23',
-            'lastCharge' => '2001-05-23',
-            'nextCharge' => '2001-06-23',
+            'createDate' => '2022-10-11T18:17:27.363Z',
+            'lastCharge' => '2022-10-11T18:17:27.363Z',
+            'nextCharge' => '2022-10-11T18:17:27.363Z',
             'assignedEmail' => '',
             'changedStatus' => 'CHANGED_STATUS_NEW',
             'chargeFrequency' => 'WEEKLY',
