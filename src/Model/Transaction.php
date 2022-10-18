@@ -32,6 +32,7 @@ class Transaction
     private Money $netPrice;
     private Money $tax;
     private Currency $currency;
+    private array $entries;
 
     public function __construct(
         string $assignedEmail,
@@ -48,7 +49,8 @@ class Transaction
         string $transactionType,
         Money $netPrice,
         Money $tax,
-        Currency $currency
+        Currency $currency,
+        array $entries
     ) {
         $this->assignedEmail = $assignedEmail;
         $this->chargeFrequency = $chargeFrequency;
@@ -65,6 +67,7 @@ class Transaction
         $this->netPrice = $netPrice;
         $this->tax = $tax;
         $this->currency = $currency;
+        $this->entries = $entries;
     }
 
     public function getAssignedEmail(): string
@@ -140,5 +143,13 @@ class Transaction
     public function getCurrency(): Currency
     {
         return $this->currency;
+    }
+
+    /**
+     * @return array
+     */
+    public function getEntries(): array
+    {
+        return $this->entries;
     }
 }

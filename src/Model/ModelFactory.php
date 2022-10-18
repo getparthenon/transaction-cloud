@@ -82,6 +82,15 @@ class ModelFactory
         $netPrice = Money::of($transaction['netPrice'], $currency);
         $tax = Money::of($transaction['tax'], $currency);
 
+        $entries = [];
+
+        if (isset($transaction['entries'])) {
+
+            foreach ($transaction['entries'] as $entry) {
+                $entries = $this->buildPayment($entry);
+            }
+        }
+
         return new Transaction(
             $transaction['assignedEmail'],
             $transaction['chargeFrequency'],
@@ -98,6 +107,7 @@ class ModelFactory
             $netPrice,
             $tax,
             $currency,
+            $entries,
         );
     }
 
