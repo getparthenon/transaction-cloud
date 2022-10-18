@@ -284,4 +284,75 @@ class ModelFactory
             $productData['customProductId'],
         );
     }
+
+    public function buildPayment(array $paymentData): PaymentEntry
+    {
+
+        $createDate = \DateTime::createFromFormat(\DATE_RFC3339_EXTENDED, $paymentData['createDate']);
+        if (false === $createDate) {
+            throw new MissingModelDataException("Expected key 'createDate' to contain date format");
+        }
+
+
+        if (!isset($paymentData['affiliateIncome'])) {
+            throw new MissingModelDataException("Expected key 'affiliateIncome' to contain a string");
+        }
+        if (!isset($paymentData['affiliateIncomeCurrency'])) {
+            throw new MissingModelDataException("Expected key 'affiliateIncomeCurrency' to contain a string");
+        }
+        if (!isset($paymentData['amountTotal'])) {
+            throw new MissingModelDataException("Expected key 'amountTotal' to contain a string");
+        }
+        if (!isset($paymentData['country'])) {
+            throw new MissingModelDataException("Expected key 'country' to contain a string");
+        }
+        if (!isset($paymentData['currency'])) {
+            throw new MissingModelDataException("Expected key 'currency' to contain a string");
+        }
+        if (!isset($paymentData['id'])) {
+            throw new MissingModelDataException("Expected key 'id' to contain a string");
+        }
+        if (!isset($paymentData['income'])) {
+            throw new MissingModelDataException("Expected key 'income' to contain a string");
+        }
+        if (!isset($paymentData['incomeCurrency'])) {
+            throw new MissingModelDataException("Expected key 'incomeCurrency' to contain a string");
+        }
+        if (!isset($paymentData['taxAmount'])) {
+            throw new MissingModelDataException("Expected key 'taxAmount' to contain a string");
+        }
+        if (!isset($paymentData['type'])) {
+            throw new MissingModelDataException("Expected key 'type' to contain a string");
+        }
+
+        if (!isset($paymentData['taxRate'])) {
+            throw new MissingModelDataException("Expected key 'taxRate' to contain a float");
+        }
+
+        $currency = Currency::of($paymentData['currency']);
+        $affiliateIncomeCurrency = Currency::of($paymentData['affiliateIncomeCurrency']);
+        $incomeCurrency = Currency::of($paymentData['incomeCurrency']);
+
+        $affiliateIncome = Money::of($paymentData['affiliateIncome'], $affiliateIncomeCurrency);
+
+        $amountTotal = Money::of($paymentData['amountTotal'], $currency);
+        $taxAmount = Money::of($paymentData['taxAmount'], $currency);
+
+        $income = Money::of($paymentData['income'], $incomeCurrency);
+
+        return new PaymentEntry(
+            $affiliateIncome,
+            $affiliateIncomeCurrency,
+            $amountTotal,
+            $paymentData['country'],
+            $createDate,
+            $currency,
+            $paymentData['id'],
+            $income,
+            $incomeCurrency,
+            $taxAmount,
+            $paymentData['taxRate'],
+            $paymentData['type']
+        );
+    }
 }

@@ -16,6 +16,7 @@ use PHPUnit\Framework\TestCase;
 use TransactionCloud\Exception\MissingModelDataException;
 use TransactionCloud\Model\ChangedTransaction;
 use TransactionCloud\Model\ModelFactory;
+use TransactionCloud\Model\PaymentEntry;
 use TransactionCloud\Model\ProductData;
 use TransactionCloud\Model\Refund;
 use TransactionCloud\Model\Transaction;
@@ -1101,5 +1102,28 @@ class ModelFactoryTest extends TestCase
         $actual = $subject->buildProductData($transactionData);
 
         $this->assertInstanceOf(ProductData::class, $actual);
+    }
+
+    public function testBuildPaymentI()
+    {
+        $paymentData = [
+            'affiliateIncome' => "10.0",
+            'affiliateIncomeCurrency' => "USD",
+            "amountTotal" => "37.0",
+            "country" => "CY",
+            "createDate" => "2022-09-23T06:58:26.000Z",
+            "currency" => "EUR",
+            "id" => "TC-BA_7R3lvVA",
+            "income" => "27.0",
+            "incomeCurrency" => "USD",
+            "taxAmount" => "5.0",
+            "taxRate" => 0.19,
+            "type" => "SUBSCRIPTION_PAYMENT",
+        ];
+
+        $subject = new ModelFactory();
+        $actual = $subject->buildPayment($paymentData);
+
+        $this->assertInstanceOf(PaymentEntry::class, $actual);
     }
 }
