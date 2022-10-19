@@ -23,6 +23,7 @@ use TransactionCloud\Exception\InvalidResponseException;
 use TransactionCloud\Exception\MalformedResponseException;
 use TransactionCloud\Exception\MissingModelDataException;
 use TransactionCloud\Model\ModelFactory;
+use TransactionCloud\Model\PaymentEntry;
 use TransactionCloud\Model\Product;
 use TransactionCloud\Model\ProductData;
 use TransactionCloud\Model\Refund;
@@ -277,5 +278,9 @@ final class TransactionCloud
     public function getPaymentUrlForProduct(string $productId): string
     {
         return sprintf('%s/payment/product/%s', $this->hostedBaseUrl, $productId);
+    }
+
+    public function getInvoiceUrlForPayment(PaymentEntry $paymentEntry) : string {
+        return sprintf('%s/invoice/%s', $this->apiBaseUrl, $paymentEntry->getId());
     }
 }
