@@ -146,7 +146,7 @@ class Transaction
     }
 
     /**
-     * @return array
+     * @return \TransactionCloud\Model\PaymentEntry[]
      */
     public function getEntries(): array
     {
